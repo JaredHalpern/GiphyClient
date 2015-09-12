@@ -7,12 +7,15 @@
 //
 
 #import "TrendingViewController.h"
+#import "Constants.h"
 #import "APIManager.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <SDWebImageManager.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface TrendingViewController ()
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) SDWebImageManager *webImageManager;
 @end
 
 static NSString *cellReuseId = @"reuse id";
@@ -24,6 +27,7 @@ static NSString *cellReuseId = @"reuse id";
   if (self = [super init]) {
     
     _dataArray = [[NSMutableArray alloc] init];
+    _webImageManager = [SDWebImageManager sharedManager];
   }
   return self;
 }
@@ -69,7 +73,6 @@ static NSString *cellReuseId = @"reuse id";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-//  NSLog(@"%s - %lu items in collection:", __PRETTY_FUNCTION__, (unsigned long)self.dataArray.count);
   return self.dataArray.count;
 }
 
@@ -77,11 +80,12 @@ static NSString *cellReuseId = @"reuse id";
 {
   UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseId forIndexPath:indexPath];
   cell.backgroundColor = [UIColor redColor];
-//  NSURL *imageURL = [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_height_downsampled"][@"url"];
   
-  NSURL *imageURL = [NSURL URLWithString:@"https://images-cdn.fantasyflightgames.com/filer_public/b2/1a/b21a44d1-eaa2-4fd2-826f-2e9e3d4136da/l5r-logo-png-1.png"];
+  NSURL *imageURL = [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_height_downsampled"][@"url"];
   UIImageView *imageView = [[UIImageView alloc] init];
-  [imageView setImageWithURL:imageURL];
+  [imageView sd_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    
+  }];
   imageView.translatesAutoresizingMaskIntoConstraints = NO;
   [cell addSubview:imageView];
   [cell addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(imageView)]];
@@ -94,7 +98,7 @@ static NSString *cellReuseId = @"reuse id";
   UICollectionReusableView *reusableView = nil;
   if (kind == UICollectionElementKindSectionHeader){
     UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
-    headerView.backgroundColor = [UIColor blueColor];
+    headerView.backgroundColor = kColorYellow;
     reusableView = headerView;
   }
   return reusableView;
