@@ -1,5 +1,5 @@
 //
-//  TrendingViewController.h
+//  SingleGifViewController.h
 //  GiphyClient
 //
 //  Created by Jared Halpern on 9/11/15.
@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GifDisplayViewController.h"
 
-@interface TrendingViewController : GifDisplayViewController
-
+@interface SingleGifViewController : UIViewController
+- (instancetype)initWithDict:(NSDictionary *)imageDict;
 @end

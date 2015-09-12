@@ -7,18 +7,10 @@
 //
 
 #import "TrendingViewController.h"
-#import "Constants.h"
-#import "APIManager.h"
-#import <SDWebImageManager.h>
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "GifDisplayViewController.h"
 
 @interface TrendingViewController ()
-@property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) NSMutableArray *dataArray;
-@property (nonatomic, strong) SDWebImageManager *webImageManager;
 @end
-
-static NSString *cellReuseId = @"reuse id";
 
 @implementation TrendingViewController
 
@@ -26,96 +18,16 @@ static NSString *cellReuseId = @"reuse id";
 {
   if (self = [super init]) {
     
-    _dataArray = [[NSMutableArray alloc] init];
-    _webImageManager = [SDWebImageManager sharedManager];
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-  layout.minimumLineSpacing = 10.;
-  layout.minimumInteritemSpacing = 10.;
-  layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  
-  _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-  _collectionView.backgroundColor = [UIColor clearColor];
-  _collectionView.showsHorizontalScrollIndicator = NO;
-  _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-  _collectionView.delegate = self;
-  _collectionView.dataSource = self;
-  _collectionView.scrollEnabled = YES;
-  [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellReuseId];
-  [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header"];
-  [self.view addSubview:_collectionView];
-  [self setupConstraints];
   [[APIManager sharedManager] getTrendingGifsWithCompletion:^(NSArray *data) {
-    self.dataArray = [data copy];
+    self.dataArray = [[self.dataArray arrayByAddingObjectsFromArray:data] mutableCopy]; // append, don't overwrite
     [self.collectionView reloadData];
-  }];
+  }];  
 }
-
-- (void)setupConstraints
-{
-  NSMutableArray *constraints = [@[] mutableCopy];
-  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_collectionView)]];
-  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_collectionView)]];
-  [self.view addConstraints:constraints];
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-  return self.dataArray.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-  UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseId forIndexPath:indexPath];
-  cell.backgroundColor = [UIColor redColor];
-  
-  NSURL *imageURL = [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_height_downsampled"][@"url"];
-  UIImageView *imageView = [[UIImageView alloc] init];
-  [imageView sd_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-    
-  }];
-  imageView.translatesAutoresizingMaskIntoConstraints = NO;
-  [cell addSubview:imageView];
-  [cell addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(imageView)]];
-  [cell addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(imageView)]];
-  return cell;
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-  UICollectionReusableView *reusableView = nil;
-  if (kind == UICollectionElementKindSectionHeader){
-    UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
-    headerView.backgroundColor = kColorYellow;
-    reusableView = headerView;
-  }
-  return reusableView;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-  return CGSizeMake(10, 10);
-}
-
-
-#pragma mark - UICollectionViewFlowLayoutDelegate
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-  return CGSizeMake(365, 200);
-}
-
 
 @end

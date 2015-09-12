@@ -14,6 +14,10 @@
 		7FF77A5C1BA21D3E00F95108 /* GiphyClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A5B1BA21D3E00F95108 /* GiphyClientTests.m */; };
 		7FF77A671BA31DD200F95108 /* TrendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A661BA31DD200F95108 /* TrendingViewController.m */; };
 		7FF77A6A1BA32AB300F95108 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A691BA32AB300F95108 /* APIManager.m */; };
+		7FF77A7D1BA3D82C00F95108 /* GifDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A7C1BA3D82C00F95108 /* GifDisplayViewController.m */; };
+		7FF77A801BA3DA7C00F95108 /* SingleGifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A7F1BA3DA7C00F95108 /* SingleGifViewController.m */; };
+		7FF77A831BA3DCBD00F95108 /* SingleGifView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A821BA3DCBD00F95108 /* SingleGifView.m */; };
+		7FF77A851BA3FBB800F95108 /* mariah.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7FF77A841BA3FBB800F95108 /* mariah.gif */; };
 		B3E6E10CC1D5BC9C39EECE54 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D86E3F272A850709A0EA1B7 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +48,13 @@
 		7FF77A681BA32AB300F95108 /* APIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIManager.h; sourceTree = "<group>"; };
 		7FF77A691BA32AB300F95108 /* APIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIManager.m; sourceTree = "<group>"; };
 		7FF77A6B1BA3362100F95108 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		7FF77A7B1BA3D82C00F95108 /* GifDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifDisplayViewController.h; sourceTree = "<group>"; };
+		7FF77A7C1BA3D82C00F95108 /* GifDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifDisplayViewController.m; sourceTree = "<group>"; };
+		7FF77A7E1BA3DA7C00F95108 /* SingleGifViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleGifViewController.h; sourceTree = "<group>"; };
+		7FF77A7F1BA3DA7C00F95108 /* SingleGifViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleGifViewController.m; sourceTree = "<group>"; };
+		7FF77A811BA3DCBD00F95108 /* SingleGifView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleGifView.h; sourceTree = "<group>"; };
+		7FF77A821BA3DCBD00F95108 /* SingleGifView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleGifView.m; sourceTree = "<group>"; };
+		7FF77A841BA3FBB800F95108 /* mariah.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = mariah.gif; sourceTree = "<group>"; };
 		A034F8298B5D7D57738196F6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E0EF5E59030D435DD4F4355B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,10 +111,12 @@
 			children = (
 				7FF77A431BA21D3D00F95108 /* AppDelegate.h */,
 				7FF77A441BA21D3D00F95108 /* AppDelegate.m */,
+				7FF77A7B1BA3D82C00F95108 /* GifDisplayViewController.h */,
+				7FF77A7C1BA3D82C00F95108 /* GifDisplayViewController.m */,
 				7FF77A651BA31DD200F95108 /* TrendingViewController.h */,
 				7FF77A661BA31DD200F95108 /* TrendingViewController.m */,
-				7FF77A681BA32AB300F95108 /* APIManager.h */,
-				7FF77A691BA32AB300F95108 /* APIManager.m */,
+				7FF77A861BA494E000F95108 /* SingleGifViewController */,
+				7FF77A871BA4950000F95108 /* Singleton Managers */,
 				7FF77A6B1BA3362100F95108 /* Constants.h */,
 				7FF77A4C1BA21D3D00F95108 /* Images.xcassets */,
 				7FF77A4E1BA21D3D00F95108 /* LaunchScreen.xib */,
@@ -115,6 +128,7 @@
 		7FF77A3F1BA21D3D00F95108 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7FF77A841BA3FBB800F95108 /* mariah.gif */,
 				7FF77A401BA21D3D00F95108 /* Info.plist */,
 				7FF77A411BA21D3D00F95108 /* main.m */,
 			);
@@ -136,6 +150,26 @@
 				7FF77A5A1BA21D3E00F95108 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7FF77A861BA494E000F95108 /* SingleGifViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7FF77A7E1BA3DA7C00F95108 /* SingleGifViewController.h */,
+				7FF77A7F1BA3DA7C00F95108 /* SingleGifViewController.m */,
+				7FF77A811BA3DCBD00F95108 /* SingleGifView.h */,
+				7FF77A821BA3DCBD00F95108 /* SingleGifView.m */,
+			);
+			name = SingleGifViewController;
+			sourceTree = "<group>";
+		};
+		7FF77A871BA4950000F95108 /* Singleton Managers */ = {
+			isa = PBXGroup;
+			children = (
+				7FF77A681BA32AB300F95108 /* APIManager.h */,
+				7FF77A691BA32AB300F95108 /* APIManager.m */,
+			);
+			name = "Singleton Managers";
 			sourceTree = "<group>";
 		};
 		E198C69A12A58DE942E2542B /* Pods */ = {
@@ -230,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FF77A501BA21D3D00F95108 /* LaunchScreen.xib in Resources */,
+				7FF77A851BA3FBB800F95108 /* mariah.gif in Resources */,
 				7FF77A4D1BA21D3D00F95108 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,9 +317,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FF77A6A1BA32AB300F95108 /* APIManager.m in Sources */,
+				7FF77A831BA3DCBD00F95108 /* SingleGifView.m in Sources */,
+				7FF77A7D1BA3D82C00F95108 /* GifDisplayViewController.m in Sources */,
 				7FF77A671BA31DD200F95108 /* TrendingViewController.m in Sources */,
 				7FF77A451BA21D3D00F95108 /* AppDelegate.m in Sources */,
 				7FF77A421BA21D3D00F95108 /* main.m in Sources */,
+				7FF77A801BA3DA7C00F95108 /* SingleGifViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
