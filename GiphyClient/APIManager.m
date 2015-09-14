@@ -31,33 +31,29 @@
 {
   if (self = [super init]) {
     AFHTTPRequestOperationManager *operationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kAPIHostURL]];
-    operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    operationManager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestOperationManager = operationManager;
   }
   return self;
 }
 
-- (void)searchTerms:(NSString *)terms withCompletion:(void (^)(NSArray *data))completion
+- (void)searchTerms:(NSString *)terms withCompletion:(void (^)(NSArray *data, NSString *searchTerms))completion
 {
-  NSString *finalTerms = [terms stringByReplacingOccurrencesOfString:@"[ \\s+]+"
-                                                           withString:@"+"
-                                                              options:NSRegularExpressionSearch
-                                                                range:NSMakeRange(0, terms.length)];
-  
-  NSDictionary *parameters = @{@"api_key" : kGiphyPublicKey, @"q" : finalTerms};
+  NSDictionary *parameters = @{@"api_key" : kGiphyPublicKey, @"q" : terms};
   
   [self.requestOperationManager GET:kEndpointSearch parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSArray *data = [responseObject objectForKey:@"data"];
 //    NSLog(@"%s - data: %@", __PRETTY_FUNCTION__, data);
-    
+    NSLog(@"%@", operation);
     if (completion) {
-      completion(data);
+      completion(data, terms);
     }
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"%s - error: %@", __PRETTY_FUNCTION__, error.description);
     if (completion) {
-      completion(nil);
+      completion(nil, nil);
     }
   }];
 }
