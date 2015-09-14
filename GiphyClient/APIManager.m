@@ -37,14 +37,18 @@
   return self;
 }
 
-- (void)searchTerms:(NSDictionary *)terms withCompletion:(void (^)(NSArray *data))completion
+- (void)searchTerms:(NSString *)terms withCompletion:(void (^)(NSArray *data))completion
 {
-  NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:terms];
-  //  [parameters setObject:nil forKey:nil];
+  NSString *finalTerms = [terms stringByReplacingOccurrencesOfString:@"[ \\s+]+"
+                                                           withString:@"+"
+                                                              options:NSRegularExpressionSearch
+                                                                range:NSMakeRange(0, terms.length)];
+  
+  NSDictionary *parameters = @{@"api_key" : kGiphyPublicKey, @"q" : finalTerms};
   
   [self.requestOperationManager GET:kEndpointSearch parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSArray *data = [responseObject objectForKey:@"data"];
-    NSLog(@"%s - data: %@", __PRETTY_FUNCTION__, data);
+//    NSLog(@"%s - data: %@", __PRETTY_FUNCTION__, data);
     
     if (completion) {
       completion(data);

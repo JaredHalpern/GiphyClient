@@ -21,6 +21,20 @@
 
 #pragma mark - Colors
 
-#define kColorYellow                 [UIColor colorWithRed:247./256. green:200./256. blue:44./256. alpha:1.0];
+#define kColorYellow            [UIColor colorWithRed:247./256. green:200./256. blue:44./256. alpha:1.0];
+#define kColorLightBlue         [UIColor colorWithRed:145./256. green:223./256. blue:221./256. alpha:1.0];
+#define kColorDarkBlue          [UIColor colorWithRed:79./256. green:136./256. blue:134./256. alpha:1.0];
+
+#pragma mark - Timing
+
+#define kTimeSearchVCSlide      0.25
+
+#pragma mark - Dimensions
+
+#define kNavBarHeight           64.0
+
+#pragma mark - Fonts
+
+#define kFontRegular          [UIFont fontWithName:@"Arial" size:16.0]
 
 #endif

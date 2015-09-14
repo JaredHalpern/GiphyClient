@@ -11,6 +11,6 @@
 
 @interface APIManager : NSObject
 + (APIManager *)sharedManager;
-- (void)searchTerms:(NSDictionary *)terms withCompletion:(void (^)(NSArray *data))completion;
+- (void)searchTerms:(NSString *)terms withCompletion:(void (^)(NSArray *data))completion;
 - (void)getTrendingGifsWithCompletion:(void (^)(NSArray *data))completion;
 @end

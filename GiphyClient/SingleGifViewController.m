@@ -31,8 +31,6 @@
   self.singleGifView = [[SingleGifView alloc] initWithDict:self.imageDict];
   self.singleGifView.delegate = self;
   [self setView:self.singleGifView];
-  
-
 }
 
 #pragma mark - UINavigation
@@ -40,6 +38,18 @@
 - (void)popViewController
 {
   [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - SingleGifViewDelegate
+
+- (void)shareSMSButtonPressed
+{
+  
+}
+
+- (void)copyToClipboardButtonPressed
+{
+  
 }
 
 @end

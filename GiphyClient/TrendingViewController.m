@@ -14,20 +14,21 @@
 
 @implementation TrendingViewController
 
-- (instancetype)init
-{
-  if (self = [super init]) {
-    
-  }
-  return self;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  __weak TrendingViewController *welf = self;
+  
   [[APIManager sharedManager] getTrendingGifsWithCompletion:^(NSArray *data) {
-    self.dataArray = [[self.dataArray arrayByAddingObjectsFromArray:data] mutableCopy]; // append, don't overwrite
-    [self.collectionView reloadData];
+    welf.dataArray = [[welf.dataArray arrayByAddingObjectsFromArray:data] mutableCopy];
+    [welf.collectionView reloadData];
   }];  
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  self.navigationController.navigationBarHidden = YES;  
 }
 
 @end

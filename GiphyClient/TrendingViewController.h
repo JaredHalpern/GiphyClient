@@ -10,5 +10,4 @@
 #import "GifDisplayViewController.h"
 
 @interface TrendingViewController : GifDisplayViewController
-
 @end

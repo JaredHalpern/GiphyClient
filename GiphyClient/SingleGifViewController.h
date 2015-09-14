@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SingleGifView.h"
 
-@interface SingleGifViewController : UIViewController
+@interface SingleGifViewController : UIViewController <SingleGifViewDelegate>
 - (instancetype)initWithDict:(NSDictionary *)imageDict;
 @end

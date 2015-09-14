@@ -11,25 +11,24 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SingleGifView ()
+@property (nonatomic, strong) UIView *containerView;
+@property (nonatomic, strong) UIView *buttonContainerView;
 @property (nonatomic, strong) UIImageView *singleGifImageView;
-@property (nonatomic, strong) UILabel *captionLabel;
-@property (nonatomic, strong) UILabel *rating;
-@property (nonatomic, strong) UILabel *trendingDateTime;
-@property (nonatomic, strong) UITextFieldLabel *embedURL;
-@property (nonatomic, strong) UITextFieldLabel *bitlyURL;
-@property (nonatomic, strong) UITextFieldLabel *sourceURL;
+@property (nonatomic, strong) UILabel *captionLabel; // @"caption"
+@property (nonatomic, strong) UILabel *rating; // @"rating"
+//@property (nonatomic, strong) UILabel *trendingDateTime; // @"trending_datetime"
+//@property (nonatomic, strong) UITextFieldLabel *embedURL;
+//@property (nonatomic, strong) UITextFieldLabel *bitlyURL;
+//@property (nonatomic, strong) UITextFieldLabel *sourceURL;
 @property (nonatomic, strong) UIButton *shareSMSButton;
 @property (nonatomic, strong) UIButton *clipboardButton;
-@property (nonatomic, strong) UIView *containerView;
 @end
 
-//#define kKeyTrendingDateTime    @"trending_datetime"
-//#define kRating                 @"rating"
+//#define kKeyTrendingDateTime
 //#define kSourceURL              @"source"
 //#define kBitlyURL               @"bitly_url"
 //#define kEmbedURL               @"embed_url"
 //#define kURL                    @"url"
-//#define kCaption                @"caption"
 
 @implementation SingleGifView
 
@@ -41,33 +40,62 @@
     
     _containerView = [[UIView alloc] init];
     _containerView.translatesAutoresizingMaskIntoConstraints = NO;
-    _containerView.backgroundColor = [UIColor redColor];
+    _containerView.backgroundColor = [UIColor clearColor];
+    _containerView.clipsToBounds = YES;
+    
+    _buttonContainerView = [[UIView alloc] init];
+    _buttonContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+    _buttonContainerView.backgroundColor = [UIColor clearColor];
+    _buttonContainerView.clipsToBounds = YES;
     
     _singleGifImageView = [[UIImageView alloc] init];
     _singleGifImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     NSURL *imageURL = dict[@"images"][@"fixed_height_downsampled"][@"url"];
-    [_singleGifImageView sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"mariah.gif"] options:SDWebImageProgressiveDownload completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-      if (error) {
-        NSLog(@"%s - %@", __PRETTY_FUNCTION__, error);
-      } else {
-        NSLog(@"%s - LOADED", __PRETTY_FUNCTION__);
-      }
-    }];
+    [_singleGifImageView sd_setImageWithURL:imageURL
+                           placeholderImage:[UIImage imageNamed:@"mariah.gif"] // random; first still gif I pulled off the trending list. Mariah alright. Liked her earlier stuff. Before she got all mainstream and into Klezmer music.
+                                    options:SDWebImageProgressiveDownload
+                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                    if (error) {
+                                      NSLog(@"%s - %@", __PRETTY_FUNCTION__, error);
+                                    }
+                                  }];
+    
     [_containerView addSubview:_singleGifImageView];
     
     _captionLabel = [[UILabel alloc] init];
+    _captionLabel.font = kFontRegular;
     _captionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _captionLabel.text = dict[@"caption"]?: @"No Caption"; // revisit this; empty description
-    _captionLabel.textColor = [UIColor blueColor];
+    _captionLabel.text = @"caption goes here"; //dict[@"caption"]?: @"No Caption"; // revisit this; empty description
+    _captionLabel.textColor = kColorDarkBlue;
     [_containerView addSubview:_captionLabel];
     
     _rating = [[UILabel alloc] init];
+    _rating.font = kFontRegular;
     _rating.translatesAutoresizingMaskIntoConstraints = NO;
     _rating.text = [NSString stringWithFormat:@"Rating: %@", dict[@"rating"]];
-    _rating.textColor = [UIColor blueColor];
+    _rating.textColor = kColorDarkBlue;
     [_containerView addSubview:_rating];
     
+    _shareSMSButton = [[UIButton alloc] init];
+    _shareSMSButton.titleLabel.font = kFontRegular;
+    _shareSMSButton.titleLabel.textColor = kColorDarkBlue;
+    [_shareSMSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_shareSMSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [_shareSMSButton setTitle:@"Share via SMS" forState:UIControlStateNormal];
+    _shareSMSButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_shareSMSButton addTarget:self action:@selector(didPressShareSMSButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_buttonContainerView addSubview:_shareSMSButton];
+    
+    _clipboardButton = [[UIButton alloc] init];
+    _clipboardButton.titleLabel.font = kFontRegular;
+    _clipboardButton.titleLabel.textColor = kColorDarkBlue;
+    [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
+    _clipboardButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_clipboardButton addTarget:self action:@selector(didPressCopyToClipboardButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_buttonContainerView addSubview:_clipboardButton];
+    
+    [_containerView addSubview:_buttonContainerView];
     [self addSubview:_containerView];
     
     [self setupConstraints];
@@ -77,35 +105,138 @@
 
 - (void)setupConstraints
 {
+  // All-encompassing containerView
+  
   NSMutableArray *containerConstraints = [@[] mutableCopy];
-  [containerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_singleGifImageView][_captionLabel(20)][_rating(20)]|"
-                                                                           options:NSLayoutFormatAlignAllLeft
-                                                                           metrics:nil
-                                                                             views:NSDictionaryOfVariableBindings(_singleGifImageView, _captionLabel, _rating)]];
-
-  [containerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(8)-[_singleGifImageView]"
-                                                                           options:NSLayoutFormatAlignAllLeft
-                                                                           metrics:nil
-                                                                             views:NSDictionaryOfVariableBindings(_singleGifImageView)]];
   
-  [containerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(8)-[_captionLabel]"
-                                                                           options:NSLayoutFormatAlignAllLeft
-                                                                           metrics:nil
-                                                                             views:NSDictionaryOfVariableBindings(_captionLabel)]];
+  [containerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(22.5)-[_singleGifImageView]-[_captionLabel]-[_rating]-[_buttonContainerView]|"
+                                                                                    options:NSLayoutFormatAlignAllCenterX
+                                                                                    metrics:nil
+                                                                                      views:NSDictionaryOfVariableBindings(_singleGifImageView, _captionLabel, _rating, _buttonContainerView)]];
   
-  [containerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(8)-[_rating]"
-                                                                           options:NSLayoutFormatAlignAllLeft
-                                                                           metrics:nil
-                                                                             views:NSDictionaryOfVariableBindings(_rating)]];
-  [self addConstraints:containerConstraints];
+  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_singleGifImageView
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.containerView
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0
+                                                                constant:0.0]];
+  
+  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_captionLabel
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.containerView
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0
+                                                                constant:0.0]];
+  
+  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_rating
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.containerView
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0
+                                                                constant:0.0]];
+  
+  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_buttonContainerView
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.containerView
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0
+                                                                constant:0.0]];
+  
+  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_buttonContainerView
+                                                               attribute:NSLayoutAttributeBottom
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.containerView
+                                                               attribute:NSLayoutAttributeBottom
+                                                              multiplier:1.0
+                                                                constant:0.0]];
+  
+  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_buttonContainerView
+                                                               attribute:NSLayoutAttributeHeight
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:nil
+                                                               attribute:NSLayoutAttributeNotAnAttribute
+                                                              multiplier:1.0
+                                                                constant:30.0]];
+  
+  [_containerView addConstraints:containerConstraints];
+  
+  // Buttons, inside their own buttonContainer, inside the larger containerView
+  
+  NSMutableArray *buttonContainerConstraints = [@[] mutableCopy];
+  
+  [buttonContainerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_shareSMSButton(120)]-(>=12)-[_clipboardButton(130)]|"
+                                                                                          options:0
+                                                                                          metrics:nil
+                                                                                            views:NSDictionaryOfVariableBindings(_shareSMSButton, _clipboardButton)]];
+  
+  [buttonContainerConstraints addObject:[NSLayoutConstraint constraintWithItem:_shareSMSButton
+                                                                     attribute:NSLayoutAttributeTop
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:_buttonContainerView
+                                                                     attribute:NSLayoutAttributeTop
+                                                                    multiplier:1.0
+                                                                      constant:0.0]];
+  
+  [buttonContainerConstraints addObject:[NSLayoutConstraint constraintWithItem:_clipboardButton
+                                                                     attribute:NSLayoutAttributeTop
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:_buttonContainerView
+                                                                     attribute:NSLayoutAttributeTop
+                                                                    multiplier:1.0
+                                                                      constant:0.0]];
+  
+  [_buttonContainerView addConstraints:buttonContainerConstraints];
+  
+  // the larger containerView
   
   NSMutableArray *constraints = [@[] mutableCopy];
-//  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=0)-[_containerView]-(>=0)-|"
-  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_containerView]"
-                                                                                    options:NSLayoutFormatAlignAllCenterY
-                                                                                    metrics:nil
-                                                                                      views:NSDictionaryOfVariableBindings(_containerView)]];
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
+                                                      attribute:NSLayoutAttributeTop
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self
+                                                      attribute:NSLayoutAttributeTop
+                                                     multiplier:1.0
+                                                       constant:0.0]];
+  
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
+                                                      attribute:NSLayoutAttributeWidth
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self
+                                                      attribute:NSLayoutAttributeWidth
+                                                     multiplier:1.0
+                                                       constant:0.0]];
+  
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
+                                                      attribute:NSLayoutAttributeLeft
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self
+                                                      attribute:NSLayoutAttributeLeft
+                                                     multiplier:1.0
+                                                       constant:0.0]];
   [self addConstraints:constraints];
 }
 
+#pragma mark - Button Methods
+
+- (void)didPressShareSMSButton:(id)sender
+{
+  [self.delegate shareSMSButtonPressed];
+}
+
+- (void)didPressCopyToClipboardButton:(id)sender
+{
+  [self.delegate copyToClipboardButtonPressed];
+}
+
 @end
+
+
+
+
+
+
+

@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SingleGifViewDelegate <NSObject>
+@required
+- (void)shareSMSButtonPressed;
+- (void)copyToClipboardButtonPressed;
+@end
+
 @interface SingleGifView : UIView
-@property (nonatomic, assign) id delegate;
 @property (nonatomic, strong) UIImageView *gifImageView;
+@property (nonatomic, assign) id <SingleGifViewDelegate> delegate;
 - (instancetype)initWithDict:(NSDictionary *)dict;
 @end
