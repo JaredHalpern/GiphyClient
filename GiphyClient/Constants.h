@@ -35,6 +35,6 @@
 
 #pragma mark - Fonts
 
-#define kFontRegular          [UIFont fontWithName:@"Arial" size:16.0]
+#define kFontRegular          [UIFont fontWithName:@"Avenir Book" size:18.0]
 
 #endif
