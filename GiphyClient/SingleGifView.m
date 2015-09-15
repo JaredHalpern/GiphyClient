@@ -55,7 +55,7 @@
     
     __weak SingleGifView *welf = self;
     [_singleGifImageView sd_setImageWithURL:imageURL
-                           placeholderImage:[UIImage imageNamed:@"mariah.gif"] // random; first still gif I pulled off the trending list. Mariah's alright. Liked her earlier stuff. Before she got all mainstream and into Klezmer music.
+                           placeholderImage:[UIImage imageNamed:@"nyan.png"]
                                     options:SDWebImageProgressiveDownload
                                   completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                     if (error) {

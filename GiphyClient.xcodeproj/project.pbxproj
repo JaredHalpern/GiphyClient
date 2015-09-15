@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7F30E2C41BA7300700B13EB6 /* SearchResultsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F30E2C31BA7300700B13EB6 /* SearchResultsHeaderView.m */; };
+		7F30E2C71BA8C20500B13EB6 /* nyan.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F30E2C61BA8C20500B13EB6 /* nyan.png */; };
 		7FF77A421BA21D3D00F95108 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A411BA21D3D00F95108 /* main.m */; };
 		7FF77A451BA21D3D00F95108 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A441BA21D3D00F95108 /* AppDelegate.m */; };
 		7FF77A4D1BA21D3D00F95108 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FF77A4C1BA21D3D00F95108 /* Images.xcassets */; };
@@ -18,7 +19,6 @@
 		7FF77A7D1BA3D82C00F95108 /* GifDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A7C1BA3D82C00F95108 /* GifDisplayViewController.m */; };
 		7FF77A801BA3DA7C00F95108 /* SingleGifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A7F1BA3DA7C00F95108 /* SingleGifViewController.m */; };
 		7FF77A831BA3DCBD00F95108 /* SingleGifView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A821BA3DCBD00F95108 /* SingleGifView.m */; };
-		7FF77A851BA3FBB800F95108 /* mariah.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7FF77A841BA3FBB800F95108 /* mariah.gif */; };
 		7FF77A8A1BA5EB0300F95108 /* SearchGifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A891BA5EB0300F95108 /* SearchGifViewController.m */; };
 		B3E6E10CC1D5BC9C39EECE54 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D86E3F272A850709A0EA1B7 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -37,6 +37,7 @@
 		7D86E3F272A850709A0EA1B7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F30E2C21BA7300700B13EB6 /* SearchResultsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsHeaderView.h; sourceTree = "<group>"; };
 		7F30E2C31BA7300700B13EB6 /* SearchResultsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsHeaderView.m; sourceTree = "<group>"; };
+		7F30E2C61BA8C20500B13EB6 /* nyan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nyan.png; sourceTree = "<group>"; };
 		7FF77A3C1BA21D3D00F95108 /* GiphyClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GiphyClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF77A401BA21D3D00F95108 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FF77A411BA21D3D00F95108 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -58,7 +59,6 @@
 		7FF77A7F1BA3DA7C00F95108 /* SingleGifViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleGifViewController.m; sourceTree = "<group>"; };
 		7FF77A811BA3DCBD00F95108 /* SingleGifView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleGifView.h; sourceTree = "<group>"; };
 		7FF77A821BA3DCBD00F95108 /* SingleGifView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleGifView.m; sourceTree = "<group>"; };
-		7FF77A841BA3FBB800F95108 /* mariah.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = mariah.gif; sourceTree = "<group>"; };
 		7FF77A881BA5EB0300F95108 /* SearchGifViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchGifViewController.h; sourceTree = "<group>"; };
 		7FF77A891BA5EB0300F95108 /* SearchGifViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchGifViewController.m; sourceTree = "<group>"; };
 		A034F8298B5D7D57738196F6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 		7FF77A3F1BA21D3D00F95108 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7FF77A841BA3FBB800F95108 /* mariah.gif */,
+				7F30E2C61BA8C20500B13EB6 /* nyan.png */,
 				7FF77A401BA21D3D00F95108 /* Info.plist */,
 				7FF77A411BA21D3D00F95108 /* main.m */,
 			);
@@ -282,8 +282,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FF77A501BA21D3D00F95108 /* LaunchScreen.xib in Resources */,
-				7FF77A851BA3FBB800F95108 /* mariah.gif in Resources */,
 				7FF77A4D1BA21D3D00F95108 /* Images.xcassets in Resources */,
+				7F30E2C71BA8C20500B13EB6 /* nyan.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

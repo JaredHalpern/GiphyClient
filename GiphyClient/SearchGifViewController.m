@@ -123,14 +123,14 @@
       __weak SearchGifViewController *welf = self;
       
       [[APIManager sharedManager] searchTerms:self.searchTerms withOffset:(self.offset + kWindowSize) andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
-
+        
         welf.offset = offset;
         
         NSMutableArray *indicesToAppend = [@[] mutableCopy];
         for (NSInteger i = 0; i < data.count; i++) {
           [indicesToAppend addObject:[NSIndexPath indexPathForItem:(welf.dataArray.count + i) inSection:0]];
         }
-        
+        NSLog(@"%s - added %li images", __PRETTY_FUNCTION__, indicesToAppend.count);
         welf.dataArray = [[welf.dataArray arrayByAddingObjectsFromArray:data] mutableCopy];
         
         [welf.collectionView performBatchUpdates:^{
