@@ -15,14 +15,14 @@
 
 @implementation SearchGifViewController
 
+#pragma mark - View Lifecycle
+
 - (instancetype)init
 {
   if (self = [super init]) {
   }
   return self;
 }
-
-#pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
@@ -35,7 +35,6 @@
   [super viewWillAppear:animated];
   [self setupConstraints];
   _searchTerms = @"";
-//  self.searchBar = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -107,14 +106,6 @@
   [self.view setNeedsLayout];
 }
 
-#pragma mark -
-
-- (void)setSearchTerms:(NSString *)searchTerms
-{
-  _searchTerms = searchTerms;
-  [self.collectionView reloadData]; // overreaching but see if this works
-}
-
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -148,14 +139,17 @@
           self.loadingGifs = NO;
           [SVProgressHUD dismiss];
         }];
-
-        
-        
-        
-        
       }];
     }
   }
+}
+
+#pragma mark -
+
+- (void)setSearchTerms:(NSString *)searchTerms
+{
+  _searchTerms = searchTerms;
+  [self.collectionView reloadData]; // overreaching but see if this works
 }
 
 @end
