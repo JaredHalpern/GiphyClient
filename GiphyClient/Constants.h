@@ -37,4 +37,9 @@
 
 #define kFontRegular          [UIFont fontWithName:@"Avenir Book" size:18.0]
 
+#pragma mark - API Related
+
+#define kWindowSize             25
+
+
 #endif

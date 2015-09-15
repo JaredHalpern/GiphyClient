@@ -38,43 +38,44 @@
   return self;
 }
 
-- (void)searchTerms:(NSString *)terms withCompletion:(void (^)(NSArray *data, NSString *searchTerms))completion
+- (void)searchTerms:(NSString *)terms withOffset:(NSInteger)offset andCompletion:(void (^)(NSArray *data, NSString *searchTerms, NSInteger offset))completion
 {
-  NSDictionary *parameters = @{@"api_key" : kGiphyPublicKey, @"q" : terms};
+  NSDictionary *parameters = @{@"api_key" : kGiphyPublicKey, @"q" : terms, @"offset" : @(offset), @"limit" : @(kWindowSize)};
   
   [self.requestOperationManager GET:kEndpointSearch parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSArray *data = [responseObject objectForKey:@"data"];
-//    NSLog(@"%s - data: %@", __PRETTY_FUNCTION__, data);
-    NSLog(@"%@", operation);
+    NSInteger newOffset = [[responseObject objectForKey:@"pagination"][@"offset"] integerValue];
+
     if (completion) {
-      completion(data, terms);
+      completion(data, terms, newOffset);
     }
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"%s - error: %@", __PRETTY_FUNCTION__, error.description);
     if (completion) {
-      completion(nil, nil);
+      completion(nil, nil, 0);
     }
   }];
 }
 
-- (void)getTrendingGifsWithCompletion:(void (^)(NSArray *data))completion
+- (void)getTrendingGifsWithOffset:(NSInteger)offset andCompletion:(void (^)(NSArray *data, NSInteger offset))completion
 {
-  NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:kGiphyPublicKey, @"api_key", nil];
+  NSDictionary *parameters = @{@"api_key" : kGiphyPublicKey, @"offset" : @(offset), @"limit" : @(kWindowSize)};
   
   [self.requestOperationManager GET:kEndpointTrending parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     if ([responseObject isKindOfClass:[NSDictionary class]]) {
       NSArray *data = (NSArray *)[responseObject objectForKey:@"data"];
-//      NSLog(@"%s - data: %@", __PRETTY_FUNCTION__, data);
+      NSInteger newOffset = [[responseObject objectForKey:@"pagination"][@"offset"] integerValue];
+      //      NSLog(@"%s - data: %@", __PRETTY_FUNCTION__, data);
       if (completion) {
-        completion(data);
+        completion(data, newOffset);
       }
     }
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"%s - error: %@", __PRETTY_FUNCTION__, error.description);
     if (completion) {
-      completion(nil);
+      completion(nil, 0);
     }
   }];}
 

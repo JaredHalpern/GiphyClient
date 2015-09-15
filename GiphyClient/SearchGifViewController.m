@@ -7,24 +7,40 @@
 //
 
 #import "SearchGifViewController.h"
+#import "SearchResultsHeaderView.h"
+
+@interface SearchGifViewController ()
+@property (nonatomic, strong) NSString *searchTerms;
+@end
 
 @implementation SearchGifViewController
 
 - (instancetype)init
 {
   if (self = [super init]) {
-    
   }
   return self;
 }
 
 #pragma mark - View Lifecycle
 
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  [self.collectionView registerClass:[SearchResultsHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCellReuseId];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
   [self setupConstraints];
   _searchTerms = @"";
+//  self.searchBar = nil;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
 }
 
 #pragma mark - Container View
@@ -46,17 +62,17 @@
   NSMutableArray *newConstraints = [@[] mutableCopy];
   
   UICollectionView *collectionView = self.collectionView;
-
-//  [newConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(62)-[collectionView]|"
+  
+  //  [newConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(62)-[collectionView]|"
   [newConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[collectionView]|"
-                                                                                options:0
-                                                                                metrics:nil
-                                                                                  views:NSDictionaryOfVariableBindings(collectionView)]];
+                                                                              options:0
+                                                                              metrics:nil
+                                                                                views:NSDictionaryOfVariableBindings(collectionView)]];
   
   [newConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|"
-                                                                                options:0
-                                                                                metrics:nil
-                                                                                  views:NSDictionaryOfVariableBindings(collectionView)]];
+                                                                              options:0
+                                                                              metrics:nil
+                                                                                views:NSDictionaryOfVariableBindings(collectionView)]];
   [self.view addConstraints:newConstraints];
 }
 
@@ -64,7 +80,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-  return CGSizeMake(10, 40);
+  return CGSizeMake([[UIScreen mainScreen] bounds].size.width, 40);
 }
 
 
@@ -72,44 +88,74 @@
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-  UICollectionReusableView *reusableView = nil;
-
+  SearchResultsHeaderView *reusableView = nil;
+  
   if (kind == UICollectionElementKindSectionHeader){
-    UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCellReuseId forIndexPath:indexPath];
-    headerView.backgroundColor = kColorLightBlue;
-//    headerView.translatesAutoresizingMaskIntoConstraints = NO;
+    SearchResultsHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCellReuseId forIndexPath:indexPath];
+    //    headerView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    UILabel *searchResults = [[UILabel alloc] init];
-//    searchResults.translatesAutoresizingMaskIntoConstraints = NO;
-    searchResults.text = [NSString stringWithFormat:@"Results for: %@", self.searchTerms];
-    [headerView addSubview:searchResults];
-    
-    NSMutableArray *constraints = [@[] mutableCopy];
-    
-//    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[searchResults]"
-//                                                                   options:0
-//                                                                   metrics:nil
-//                                                                     views:NSDictionaryOfVariableBindings(searchResults)]];
-
-//    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[searchResults]"
-//                                                                   options:NSLayoutFormatAlignAllLeft
-//                                                                   metrics:nil
-//                                                                     views:NSDictionaryOfVariableBindings(searchResults)]];
-    
-//    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[headerView]"
-//                                                                   options:0
-//                                                                   metrics:nil
-//                                                                     views:NSDictionaryOfVariableBindings(headerView)]];
-//
-//    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[headerView(22.0)]"
-//                                                                   options:NSLayoutFormatAlignAllTop
-//                                                                   metrics:nil//@{@"headerHeight" : @22.0}
-//                                                                     views:NSDictionaryOfVariableBindings(headerView)]];
-    [self.view addConstraints:constraints];
-
+    [self updateSectionHeader:headerView];
     reusableView = headerView;
   }
   return reusableView;
+}
+
+- (void)updateSectionHeader:(SearchResultsHeaderView *)header
+{
+  NSString *text = [NSString stringWithFormat:@"Results for: %@", self.searchTerms];
+  [header setResultsLabelText:text];
+  [self.view setNeedsLayout];
+}
+
+#pragma mark -
+
+- (void)setSearchTerms:(NSString *)searchTerms
+{
+  _searchTerms = searchTerms;
+  [self.collectionView reloadData]; // overreaching but see if this works
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+  CGFloat offsetY = scrollView.contentOffset.y;
+  CGFloat contentHeight = scrollView.contentSize.height;
+  
+  if (offsetY > contentHeight - scrollView.frame.size.height){
+    
+    if (!self.loadingGifs) {
+      
+      [SVProgressHUD show];
+      self.loadingGifs = YES;
+      
+      __weak SearchGifViewController *welf = self;
+      
+      [[APIManager sharedManager] searchTerms:self.searchTerms withOffset:(self.offset + kWindowSize) andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
+
+        welf.offset = offset;
+        
+        NSMutableArray *indicesToAppend = [@[] mutableCopy];
+        for (NSInteger i = 0; i < data.count; i++) {
+          [indicesToAppend addObject:[NSIndexPath indexPathForItem:(welf.dataArray.count + i) inSection:0]];
+        }
+        
+        welf.dataArray = [[welf.dataArray arrayByAddingObjectsFromArray:data] mutableCopy];
+        
+        [welf.collectionView performBatchUpdates:^{
+          [welf.collectionView insertItemsAtIndexPaths:indicesToAppend];
+        } completion:^(BOOL finished) {
+          self.loadingGifs = NO;
+          [SVProgressHUD dismiss];
+        }];
+
+        
+        
+        
+        
+      }];
+    }
+  }
 }
 
 @end

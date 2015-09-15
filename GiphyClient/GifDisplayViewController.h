@@ -11,13 +11,16 @@
 #import "APIManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "SingleGifViewController.h"
+#import <SVProgressHUD.h>
 
 static NSString *cellReuseId = @"reuseId";
 static NSString *headerCellReuseId = @"headerCellReuseId";
 
-@interface GifDisplayViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate>
+@interface GifDisplayViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableArray *constraints;
-@property (strong, nonatomic) UISearchBar *searchBar;
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, assign) NSInteger offset;
+@property (nonatomic, assign) BOOL loadingGifs;
 @end

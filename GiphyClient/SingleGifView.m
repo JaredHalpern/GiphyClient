@@ -52,31 +52,20 @@
     _singleGifImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     NSURL *imageURL = dict[@"images"][@"fixed_height_downsampled"][@"url"];
+    
+    __weak SingleGifView *welf = self;
     [_singleGifImageView sd_setImageWithURL:imageURL
-                           placeholderImage:[UIImage imageNamed:@"mariah.gif"] // random; first still gif I pulled off the trending list. Mariah alright. Liked her earlier stuff. Before she got all mainstream and into Klezmer music.
+                           placeholderImage:[UIImage imageNamed:@"mariah.gif"] // random; first still gif I pulled off the trending list. Mariah's alright. Liked her earlier stuff. Before she got all mainstream and into Klezmer music.
                                     options:SDWebImageProgressiveDownload
                                   completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                     if (error) {
                                       NSLog(@"%s - %@", __PRETTY_FUNCTION__, error);
                                     }
+                                    welf.singleGifImage = image;
                                   }];
     
     [_containerView addSubview:_singleGifImageView];
-    
-    _captionLabel = [[UILabel alloc] init];
-    _captionLabel.font = kFontRegular;
-    _captionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _captionLabel.text = @"caption goes here"; //dict[@"caption"]?: @"No Caption"; // revisit this; empty description
-    _captionLabel.textColor = kColorDarkBlue;
-    [_containerView addSubview:_captionLabel];
-    
-    _rating = [[UILabel alloc] init];
-    _rating.font = kFontRegular;
-    _rating.translatesAutoresizingMaskIntoConstraints = NO;
-    _rating.text = [NSString stringWithFormat:@"Rating: %@", dict[@"rating"]];
-    _rating.textColor = kColorDarkBlue;
-    [_containerView addSubview:_rating];
-    
+        
     _shareSMSButton = [[UIButton alloc] init];
     _shareSMSButton.titleLabel.font = kFontRegular;
     _shareSMSButton.titleLabel.textColor = kColorDarkBlue;
@@ -109,28 +98,12 @@
   
   NSMutableArray *containerConstraints = [@[] mutableCopy];
   
-  [containerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(22.5)-[_singleGifImageView]-[_captionLabel]-[_rating]-[_buttonContainerView]|"
+  [containerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(22.5)-[_singleGifImageView]-(20)-[_buttonContainerView]|"
                                                                                     options:NSLayoutFormatAlignAllCenterX
                                                                                     metrics:nil
-                                                                                      views:NSDictionaryOfVariableBindings(_singleGifImageView, _captionLabel, _rating, _buttonContainerView)]];
+                                                                                      views:NSDictionaryOfVariableBindings(_singleGifImageView, _buttonContainerView)]];
   
   [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_singleGifImageView
-                                                               attribute:NSLayoutAttributeCenterX
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self.containerView
-                                                               attribute:NSLayoutAttributeCenterX
-                                                              multiplier:1.0
-                                                                constant:0.0]];
-  
-  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_captionLabel
-                                                               attribute:NSLayoutAttributeCenterX
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self.containerView
-                                                               attribute:NSLayoutAttributeCenterX
-                                                              multiplier:1.0
-                                                                constant:0.0]];
-  
-  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_rating
                                                                attribute:NSLayoutAttributeCenterX
                                                                relatedBy:NSLayoutRelationEqual
                                                                   toItem:self.containerView
@@ -168,7 +141,7 @@
   
   NSMutableArray *buttonContainerConstraints = [@[] mutableCopy];
   
-  [buttonContainerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_shareSMSButton(120)]-(>=12)-[_clipboardButton(130)]|"
+  [buttonContainerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_shareSMSButton(120)]-(>=22)-[_clipboardButton(150)]|"
                                                                                           options:0
                                                                                           metrics:nil
                                                                                             views:NSDictionaryOfVariableBindings(_shareSMSButton, _clipboardButton)]];

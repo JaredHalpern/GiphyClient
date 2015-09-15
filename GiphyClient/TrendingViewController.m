@@ -17,18 +17,23 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  [SVProgressHUD show];
+  self.loadingGifs = YES;
   __weak TrendingViewController *welf = self;
   
-  [[APIManager sharedManager] getTrendingGifsWithCompletion:^(NSArray *data) {
+  [[APIManager sharedManager] getTrendingGifsWithOffset:self.offset andCompletion:^(NSArray *data, NSInteger offset) {
     welf.dataArray = [[welf.dataArray arrayByAddingObjectsFromArray:data] mutableCopy];
+    welf.offset = offset;
     [welf.collectionView reloadData];
-  }];  
+    self.loadingGifs = NO;
+    [SVProgressHUD dismiss];
+  }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  self.navigationController.navigationBarHidden = YES;  
+  self.navigationController.navigationBarHidden = YES;
 }
 
 @end

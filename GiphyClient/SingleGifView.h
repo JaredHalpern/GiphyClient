@@ -15,7 +15,7 @@
 @end
 
 @interface SingleGifView : UIView
-@property (nonatomic, strong) UIImageView *gifImageView;
+@property (nonatomic, strong) UIImage *singleGifImage;
 @property (nonatomic, assign) id <SingleGifViewDelegate> delegate;
 - (instancetype)initWithDict:(NSDictionary *)dict;
 @end

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GifDisplayViewController.h"
 
+
 @interface SearchGifViewController : GifDisplayViewController
-@property (nonatomic, strong) NSString *searchTerms;
+- (void)setSearchTerms:(NSString *)searchTerms;
 @end
