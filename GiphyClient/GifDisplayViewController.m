@@ -30,6 +30,11 @@
   return self;
 }
 
+- (void)didReceiveMemoryWarning
+{
+ // free up UIImages in earlier part of collection
+}
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];

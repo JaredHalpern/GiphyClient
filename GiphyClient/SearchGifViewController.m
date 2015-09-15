@@ -121,7 +121,7 @@
       self.loadingGifs = YES;
       
       __weak SearchGifViewController *welf = self;
-      
+      NSLog(@"%@", self.searchTerms);
       [[APIManager sharedManager] searchTerms:self.searchTerms withOffset:(self.offset + kWindowSize) andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
         
         welf.offset = offset;

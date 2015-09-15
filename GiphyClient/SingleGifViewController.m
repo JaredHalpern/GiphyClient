@@ -54,7 +54,7 @@
 
 - (void)share
 {
-  NSURL *imageURL = [NSURL URLWithString:self.imageDict[@"images"][@"fixed_height_downsampled"][@"url"]];
+  NSURL *imageURL = [NSURL URLWithString:self.imageDict[@"images"][@"fixed_height"][@"url"]];
   NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
   NSArray *objectsToShare = @[imageData];
   
