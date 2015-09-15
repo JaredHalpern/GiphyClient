@@ -41,14 +41,16 @@
   _offset = 0;
   self.view.clipsToBounds = NO;
   
+  // Setup Progress HUD Appearance
   UIColor *backgroundColor = [UIColor colorWithRed:145./256. green:223./256. blue:221./256. alpha:1.0]; // light blue
   UIColor *foregroundColor = [UIColor colorWithRed:79./256. green:136./256. blue:134./256. alpha:1.0]; // yellow
   [SVProgressHUD setBackgroundColor:backgroundColor];
   [SVProgressHUD setForegroundColor:foregroundColor];
+  
   _collectionViewLayout= [[UICollectionViewFlowLayout alloc] init];
-//  _collectionViewLayout.minimumLineSpacing = 10.0;
-  _collectionViewLayout.minimumInteritemSpacing = 0.0;
+  _collectionViewLayout.minimumLineSpacing = 8.0;
   _collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+  _collectionViewLayout.sectionInset = UIEdgeInsetsZero;
   
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:_collectionViewLayout];
   _collectionView.backgroundColor = [UIColor clearColor];
@@ -57,7 +59,7 @@
   _collectionView.delegate = self;
   _collectionView.dataSource = self;
   _collectionView.scrollEnabled = YES;
-  _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+  _collectionView.contentInset = UIEdgeInsetsZero;
   _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
   [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellReuseId];
   [self.view addSubview:_collectionView];
@@ -67,7 +69,7 @@
   _searchBar.translatesAutoresizingMaskIntoConstraints = NO;
   _searchBar.delegate = self;
   _searchBar.searchBarStyle = UISearchBarStyleProminent;
-  _searchBar.placeholder = NSLocalizedString(@"Search all the things", nil);
+  _searchBar.placeholder = NSLocalizedString(@"Search all the things!", nil);
   _searchBar.clearsContextBeforeDrawing = YES;
   [_searchBar setShowsCancelButton:YES animated:YES];
   _searchBar.showsBookmarkButton = NO;
@@ -108,6 +110,9 @@
 
 - (void)dismissSearchGifViewController
 {
+  if (!self.searchVC) {
+    return;
+  }
   self.searchBar.text = nil;
   [self.searchBar resignFirstResponder];
   [self.view layoutIfNeeded];
@@ -132,11 +137,13 @@
     [self.searchVC.view removeFromSuperview];
     [self.searchVC removeFromParentViewController];
     [self.view layoutIfNeeded];
+    self.searchVC = nil;
   }];
 }
 
 - (void)showSearchGifViewController
 {
+  if (!self.searchVC) {
     self.searchVC = [[SearchGifViewController alloc] init];
     self.searchVC.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addChildViewController:self.searchVC];
@@ -209,6 +216,7 @@
     } completion:^(BOOL finished) {
       [self.searchVC didMoveToParentViewController:self];
     }];
+  }
   
   self.searchVC.loadingGifs = YES;
   
@@ -257,7 +265,7 @@
 //  cell.backgroundColor = [UIColor blueColor];
   cell.clipsToBounds = YES;
   
-  NSURL *imageURL = [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_height_downsampled"][@"url"];
+  NSURL *imageURL = [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_width_downsampled"][@"url"];
   UIImageView *imageView = [[UIImageView alloc] init];
   imageView.translatesAutoresizingMaskIntoConstraints = NO;
   
@@ -267,31 +275,47 @@
   
   [cell.contentView addSubview:imageView];
   
-  //  [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-  //                                                   attribute:NSLayoutAttributeCenterX
-  //                                                   relatedBy:NSLayoutRelationEqual
-  //                                                      toItem:cell
-  //                                                   attribute:NSLayoutAttributeCenterX
-  //                                                  multiplier:1.0
-  //                                                    constant:0.0]];
-  //
-  //  [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-  //                                                   attribute:NSLayoutAttributeCenterY
-  //                                                   relatedBy:NSLayoutRelationEqual
-  //                                                      toItem:cell
-  //                                                   attribute:NSLayoutAttributeCenterY
-  //                                                  multiplier:1.0
-  //                                                    constant:0.0]];
+    [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:cell
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1.0
+                                                      constant:0.0]];
   
-  [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]|"
-                                                                           options:0
-                                                                           metrics:nil
-                                                                             views:NSDictionaryOfVariableBindings(imageView)]];
+    [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:cell
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1.0
+                                                      constant:0.0]];
   
-  [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[imageView]-|"
-                                                                           options:0
-                                                                           metrics:nil
-                                                                             views:NSDictionaryOfVariableBindings(imageView)]];
+  [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                   attribute:NSLayoutAttributeWidth
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:cell
+                                                   attribute:NSLayoutAttributeWidth
+                                                  multiplier:1.0
+                                                    constant:0.0]];
+  
+  [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                   attribute:NSLayoutAttributeHeight
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:cell
+                                                   attribute:NSLayoutAttributeHeight
+                                                  multiplier:1.0
+                                                    constant:0.0]];
+  
+//  [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]|"
+//                                                                           options:0
+//                                                                           metrics:nil
+//                                                                             views:NSDictionaryOfVariableBindings(imageView)]];
+//  
+//  [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[imageView]|"
+//                                                                           options:0
+//                                                                           metrics:nil
+//                                                                             views:NSDictionaryOfVariableBindings(imageView)]];
   
 //  NSLog(@"cell size: %f, %f", cell.frame.size.width, cell.frame.size.height);
   return cell;
@@ -299,7 +323,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSAssert(indexPath, @"need index path");
   NSMutableDictionary *dataDict = [NSMutableDictionary dictionaryWithDictionary:[self.dataArray objectAtIndex:indexPath.row]];
   
   SingleGifViewController *singleGifVC = [[SingleGifViewController alloc] initWithDict:dataDict];
@@ -318,11 +341,11 @@
 //  CGFloat cellHeight = [[UIScreen mainScreen] bounds].size.height - 120;
 //  NSLog(@"screen size: %f, %f", result.width, result.height);
   
-  NSDictionary *dict =  [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_height_downsampled"];
-//  NSInteger width =  [[dict objectForKey:@"width"] integerValue];
+  NSDictionary *dict =  [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_width_downsampled"];
+  NSInteger width =  [[dict objectForKey:@"width"] integerValue];
   NSInteger height = [[dict objectForKey:@"height"] integerValue];
 //  NSLog(@"returning: %li, %li", width, height);
-  return CGSizeMake(300, height);
+  return CGSizeMake(width, height);
 //  return CGSizeMake(100, 100);
 }
 
