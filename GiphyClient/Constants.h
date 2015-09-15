@@ -41,5 +41,4 @@
 
 #define kWindowSize             25
 
-
 #endif

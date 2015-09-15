@@ -16,19 +16,9 @@
 @property (nonatomic, strong) UIImageView *singleGifImageView;
 @property (nonatomic, strong) UILabel *captionLabel; // @"caption"
 @property (nonatomic, strong) UILabel *rating; // @"rating"
-//@property (nonatomic, strong) UILabel *trendingDateTime; // @"trending_datetime"
-//@property (nonatomic, strong) UITextFieldLabel *embedURL;
-//@property (nonatomic, strong) UITextFieldLabel *bitlyURL;
-//@property (nonatomic, strong) UITextFieldLabel *sourceURL;
 @property (nonatomic, strong) UIButton *shareSMSButton;
 @property (nonatomic, strong) UIButton *clipboardButton;
 @end
-
-//#define kKeyTrendingDateTime
-//#define kSourceURL              @"source"
-//#define kBitlyURL               @"bitly_url"
-//#define kEmbedURL               @"embed_url"
-//#define kURL                    @"url"
 
 @implementation SingleGifView
 

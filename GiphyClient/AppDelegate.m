@@ -10,7 +10,6 @@
 #import "TrendingViewController.h"
 
 @interface AppDelegate ()
-
 @end
 
 @implementation AppDelegate

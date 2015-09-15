@@ -106,6 +106,7 @@
   self.searchBar.text = nil;
   [self.searchBar resignFirstResponder];
   [self.view layoutIfNeeded];
+  
   [UIView animateWithDuration:kTimeSearchVCSlide animations:^{
     [self.view removeConstraint:self.searchVCTopConstraint];
     [self.view removeConstraint:self.searchVCHeightConstraint];
@@ -126,7 +127,6 @@
     [self.searchVC.view removeFromSuperview];
     [self.searchVC removeFromParentViewController];
     [self.view layoutIfNeeded];
-//    self.searchVC = nil;
   }];
 }
 
@@ -207,7 +207,6 @@
   
   self.searchVC.loadingGifs = YES;
   
-  // could move this to SearchGifViewController
   __weak GifDisplayViewController *welf = self;
   
   [[APIManager sharedManager] searchTerms:self.searchBar.text withOffset:(self.offset) andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
