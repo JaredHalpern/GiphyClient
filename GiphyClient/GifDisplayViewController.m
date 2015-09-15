@@ -323,9 +323,8 @@
   NSDictionary *dict =  [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_width_downsampled"];
   NSInteger width =  [[dict objectForKey:@"width"] integerValue];
   NSInteger height = [[dict objectForKey:@"height"] integerValue];
-//  NSLog(@"returning: %li, %li", width, height);
-  return CGSizeMake(width, height);
-//  return CGSizeMake(100, 100);
+
+  return CGSizeMake(width*1.4, height*1.4); // scale up
 }
 
 @end
