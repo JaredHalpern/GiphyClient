@@ -43,7 +43,7 @@
 		7FF77A411BA21D3D00F95108 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7FF77A431BA21D3D00F95108 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7FF77A441BA21D3D00F95108 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7FF77A4C1BA21D3D00F95108 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7FF77A4C1BA21D3D00F95108 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = GiphyClient/Images.xcassets; sourceTree = "<group>"; };
 		7FF77A4F1BA21D3D00F95108 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		7FF77A551BA21D3E00F95108 /* GiphyClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GiphyClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF77A5A1BA21D3E00F95108 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -107,6 +107,8 @@
 			isa = PBXGroup;
 			children = (
 				7FF77A3E1BA21D3D00F95108 /* GiphyClient */,
+				7FF77A4C1BA21D3D00F95108 /* Images.xcassets */,
+				7FF77A4E1BA21D3D00F95108 /* LaunchScreen.xib */,
 				7FF77A581BA21D3E00F95108 /* GiphyClientTests */,
 				7FF77A3D1BA21D3D00F95108 /* Products */,
 				E198C69A12A58DE942E2542B /* Pods */,
@@ -136,8 +138,6 @@
 				7FF77A861BA494E000F95108 /* SingleGifViewController */,
 				7FF77A871BA4950000F95108 /* Singleton Managers */,
 				7FF77A6B1BA3362100F95108 /* Constants.h */,
-				7FF77A4C1BA21D3D00F95108 /* Images.xcassets */,
-				7FF77A4E1BA21D3D00F95108 /* LaunchScreen.xib */,
 				7FF77A3F1BA21D3D00F95108 /* Supporting Files */,
 			);
 			path = GiphyClient;
@@ -371,6 +371,7 @@
 				7FF77A4F1BA21D3D00F95108 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = GiphyClient;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
