@@ -33,13 +33,6 @@
   [self setView:_singleGifView];
 }
 
-#pragma mark - UINavigation
-
-- (void)popViewController
-{
-  [self.navigationController popViewControllerAnimated:YES];
-}
-
 #pragma mark - SingleGifViewDelegate
 
 - (void)shareSMSButtonPressed
@@ -59,6 +52,24 @@
   NSArray *objectsToShare = @[imageData];
   
   UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+  activityVC.completionWithItemsHandler = ^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError){
+    if (activityError) {
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:activityError.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      [alert show];
+    } else if (completed){
+      NSLog(@"%@", activityType);
+      if ([activityType isEqualToString:@"com.apple.UIKit.activity.SaveToCameraRoll"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Saved!" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+      } else if ([activityType isEqualToString:@"com.apple.UIKit.activity.CopyToPasteboard"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Copied!" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+      } else if ([activityType isEqualToString:@"com.apple.UIKit.activity.Message"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message Sent!" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+      }
+    }
+  };
   
   NSArray *excludeActivities = @[UIActivityTypeAirDrop,
                                  UIActivityTypePrint,

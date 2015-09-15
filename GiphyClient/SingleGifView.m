@@ -42,7 +42,6 @@
     _singleGifImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     NSURL *imageURL = dict[@"images"][@"fixed_height"][@"url"];
-//    NSURL *imageURL = dict[@"images"][@"fixed_height_downsampled"][@"url"];    
     __weak SingleGifView *welf = self;
     [_singleGifImageView sd_setImageWithURL:imageURL
                            placeholderImage:[UIImage imageNamed:@"nyan.png"]
