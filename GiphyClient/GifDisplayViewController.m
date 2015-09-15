@@ -93,7 +93,7 @@
                                                                                 metrics:nil
                                                                                   views:NSDictionaryOfVariableBindings(_searchBar,_collectionView)]];
   
-  [self.constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_collectionView]-|"
+  [self.constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|"
                                                                                 options:0
                                                                                 metrics:nil
                                                                                   views:NSDictionaryOfVariableBindings(_collectionView)]];
@@ -157,7 +157,7 @@
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeHeight
                                                                 multiplier:1.0
-                                                                  constant:-kNavBarHeight];
+                                                                  constant:-kNavBarHeight - kKeylineHeight];  // preserve that little keyline under the search bar.
     
     self.searchVCTopConstraint = [NSLayoutConstraint constraintWithItem:self.searchVC.view
                                                               attribute:NSLayoutAttributeTop
@@ -200,7 +200,7 @@
                                                                    toItem:self.view
                                                                 attribute:NSLayoutAttributeTop
                                                                multiplier:1.0
-                                                                 constant:kNavBarHeight];
+                                                                 constant:kNavBarHeight + kKeylineHeight];
       
       [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.searchVC.view
                                                             attribute:NSLayoutAttributeBottom
@@ -261,8 +261,6 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
   UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseId forIndexPath:indexPath];
-  //  cell.translatesAutoresizingMaskIntoConstraints = NO;
-//  cell.backgroundColor = [UIColor blueColor];
   cell.clipsToBounds = YES;
   
   NSURL *imageURL = [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_width_downsampled"][@"url"];
@@ -275,21 +273,21 @@
   
   [cell.contentView addSubview:imageView];
   
-    [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                     attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:cell
-                                                     attribute:NSLayoutAttributeCenterX
-                                                    multiplier:1.0
-                                                      constant:0.0]];
+  [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                   attribute:NSLayoutAttributeCenterX
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:cell
+                                                   attribute:NSLayoutAttributeCenterX
+                                                  multiplier:1.0
+                                                    constant:0.0]];
   
-    [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                     attribute:NSLayoutAttributeCenterY
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:cell
-                                                     attribute:NSLayoutAttributeCenterY
-                                                    multiplier:1.0
-                                                      constant:0.0]];
+  [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                   attribute:NSLayoutAttributeCenterY
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:cell
+                                                   attribute:NSLayoutAttributeCenterY
+                                                  multiplier:1.0
+                                                    constant:0.0]];
   
   [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
                                                    attribute:NSLayoutAttributeWidth
@@ -306,18 +304,6 @@
                                                    attribute:NSLayoutAttributeHeight
                                                   multiplier:1.0
                                                     constant:0.0]];
-  
-//  [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]|"
-//                                                                           options:0
-//                                                                           metrics:nil
-//                                                                             views:NSDictionaryOfVariableBindings(imageView)]];
-//  
-//  [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(10)-[imageView]|"
-//                                                                           options:0
-//                                                                           metrics:nil
-//                                                                             views:NSDictionaryOfVariableBindings(imageView)]];
-  
-//  NSLog(@"cell size: %f, %f", cell.frame.size.width, cell.frame.size.height);
   return cell;
 }
 
@@ -334,13 +320,6 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//  CGSize result = [[UIScreen mainScreen] bounds].size;
-//  CGFloat scale = [UIScreen mainScreen].scale;
-//  result = CGSizeMake(result.width * scale, result.height * scale);
-//  CGFloat cellWidth =  [[UIScreen mainScreen] bounds].size.width - 20;
-//  CGFloat cellHeight = [[UIScreen mainScreen] bounds].size.height - 120;
-//  NSLog(@"screen size: %f, %f", result.width, result.height);
-  
   NSDictionary *dict =  [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_width_downsampled"];
   NSInteger width =  [[dict objectForKey:@"width"] integerValue];
   NSInteger height = [[dict objectForKey:@"height"] integerValue];

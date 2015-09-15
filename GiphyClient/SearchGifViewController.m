@@ -58,11 +58,10 @@
 - (void)setupConstraints
 {
   [self.view removeConstraints:self.constraints];
-  NSMutableArray *newConstraints = [@[] mutableCopy];
   
+  NSMutableArray *newConstraints = [@[] mutableCopy];
   UICollectionView *collectionView = self.collectionView;
   
-  //  [newConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(62)-[collectionView]|"
   [newConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[collectionView]|"
                                                                               options:0
                                                                               metrics:nil
@@ -91,8 +90,6 @@
   
   if (kind == UICollectionElementKindSectionHeader){
     SearchResultsHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCellReuseId forIndexPath:indexPath];
-    //    headerView.translatesAutoresizingMaskIntoConstraints = NO;
-    
     [self updateSectionHeader:headerView];
     reusableView = headerView;
   }
@@ -121,7 +118,7 @@
       self.loadingGifs = YES;
       
       __weak SearchGifViewController *welf = self;
-      NSLog(@"%@", self.searchTerms);
+      NSLog(@"searchTerms: %@", self.searchTerms);
       [[APIManager sharedManager] searchTerms:self.searchTerms withOffset:(self.offset + kWindowSize) andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
         
         welf.offset = offset;
@@ -138,6 +135,7 @@
         } completion:^(BOOL finished) {
           self.loadingGifs = NO;
           [SVProgressHUD dismiss];
+          NSLog(@"%s done loading", __PRETTY_FUNCTION__);
         }];
       }];
     }

@@ -32,6 +32,7 @@
 #pragma mark - Dimensions
 
 #define kNavBarHeight           64.0
+#define kKeylineHeight          2.0
 
 #pragma mark - Fonts
 
