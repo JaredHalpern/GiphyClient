@@ -1,5 +1,5 @@
 # GiphyClient
-An iOS Client for Giphy!
+An iOS Client for Giphy! - Please note: only runs on iOS 8 at the moment.
 
 To run:
 
