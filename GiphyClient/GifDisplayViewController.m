@@ -44,7 +44,7 @@
   
   // Setup Progress HUD Appearance
   [SVProgressHUD setBackgroundColor:kColorLightBlue];
-  [SVProgressHUD setForegroundColor:kColorYellow];
+  [SVProgressHUD setForegroundColor:kColorDarkBlue];
   
   _collectionViewLayout= [[UICollectionViewFlowLayout alloc] init];
   _collectionViewLayout.minimumLineSpacing = 8.0;
