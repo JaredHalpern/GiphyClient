@@ -13,6 +13,7 @@
 
 #define kAPIHostURL             @"http://api.giphy.com"
 #define kGiphyPublicKey         @"dc6zaTOxFJmzC"
+#define kPlaceholderImage       [UIImage imageNamed:@"nyan.png"]
 
 #pragma mark - API Endpoints
 

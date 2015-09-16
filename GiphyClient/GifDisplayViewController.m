@@ -308,7 +308,7 @@
   UIImageView *imageView = [[UIImageView alloc] init];
   imageView.translatesAutoresizingMaskIntoConstraints = NO;
   
-  [imageView sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"nyan.png"] options:SDWebImageProgressiveDownload completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+  [imageView sd_setImageWithURL:imageURL placeholderImage:kPlaceholderImage options:SDWebImageProgressiveDownload completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     
   }];
   
