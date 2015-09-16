@@ -20,6 +20,7 @@
 - (instancetype)init
 {
   if (self = [super init]) {
+    _searchTerms = @"";    
   }
   return self;
 }
@@ -28,18 +29,12 @@
 {
   [super viewDidLoad];
   [self.collectionView registerClass:[SearchResultsHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerCellReuseId];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-  [super viewWillAppear:animated];
   [self setupConstraints];
-  _searchTerms = @"";
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)setupSearchBar
 {
-  [super viewDidAppear:animated];
+   // don't use the searchbar in this subclass
 }
 
 #pragma mark - Container View

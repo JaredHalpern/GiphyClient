@@ -10,9 +10,11 @@
 #import "SearchGifViewController.h"
 
 @interface GifDisplayViewController ()
-@property (nonatomic, strong) SearchGifViewController *searchVC;
-@property (nonatomic, strong) NSLayoutConstraint *searchVCTopConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *searchVCHeightConstraint;
+@property (nonatomic, strong) UISearchBar                *searchBar;
+@property (nonatomic, strong) UIButton                   *searchCloseButton;
+@property (nonatomic, strong) SearchGifViewController    *searchVC;
+@property (nonatomic, strong) NSLayoutConstraint         *searchVCTopConstraint;
+@property (nonatomic, strong) NSLayoutConstraint         *searchVCHeightConstraint;
 @property (nonatomic, strong) UICollectionViewFlowLayout *collectionViewLayout;
 @end
 
@@ -24,7 +26,6 @@
 {
   if (self = [super init]) {
     _dataArray = [[NSMutableArray alloc] init];
-//    _offset = 0;
     _loadingGifs = NO;
   }
   return self;
@@ -42,10 +43,8 @@
   self.view.clipsToBounds = NO;
   
   // Setup Progress HUD Appearance
-  UIColor *backgroundColor = [UIColor colorWithRed:145./256. green:223./256. blue:221./256. alpha:1.0]; // light blue
-  UIColor *foregroundColor = [UIColor colorWithRed:79./256. green:136./256. blue:134./256. alpha:1.0]; // yellow
-  [SVProgressHUD setBackgroundColor:backgroundColor];
-  [SVProgressHUD setForegroundColor:foregroundColor];
+  [SVProgressHUD setBackgroundColor:kColorLightBlue];
+  [SVProgressHUD setForegroundColor:kColorYellow];
   
   _collectionViewLayout= [[UICollectionViewFlowLayout alloc] init];
   _collectionViewLayout.minimumLineSpacing = 8.0;
@@ -64,22 +63,7 @@
   [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellReuseId];
   [self.view addSubview:_collectionView];
   
-  _searchBar = [[UISearchBar alloc] init];
-  _searchBar.barTintColor = kColorLightBlue;
-  _searchBar.translatesAutoresizingMaskIntoConstraints = NO;
-  _searchBar.delegate = self;
-  _searchBar.searchBarStyle = UISearchBarStyleProminent;
-  _searchBar.placeholder = NSLocalizedString(@"Search all the things!", nil);
-  _searchBar.clearsContextBeforeDrawing = YES;
-  [_searchBar setShowsCancelButton:YES animated:YES];
-  _searchBar.showsBookmarkButton = NO;
-  _searchBar.translucent = NO;
-  [self.view addSubview:_searchBar];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-  [super viewWillAppear:animated];
+  [self setupSearchBar];
   [self setupConstraints];
 }
 
@@ -92,30 +76,78 @@
                                                                                 options:0
                                                                                 metrics:nil
                                                                                   views:NSDictionaryOfVariableBindings(_searchBar,_collectionView)]];
+
+  [self.constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_searchBar][_searchCloseButton(60)]|"
+                                                                                options:0
+                                                                                metrics:nil
+                                                                                  views:NSDictionaryOfVariableBindings(_searchBar, _searchCloseButton)]];
   
   [self.constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|"
                                                                                 options:0
                                                                                 metrics:nil
                                                                                   views:NSDictionaryOfVariableBindings(_collectionView)]];
   // searchBar
-  [self.constraints addObject:[NSLayoutConstraint constraintWithItem:_searchBar
-                                                           attribute:NSLayoutAttributeWidth
+  [self.constraints addObject:[NSLayoutConstraint constraintWithItem:_searchCloseButton
+                                                           attribute:NSLayoutAttributeHeight
                                                            relatedBy:NSLayoutRelationEqual
-                                                              toItem:self.view
-                                                           attribute:NSLayoutAttributeWidth
+                                                              toItem:_searchBar
+                                                           attribute:NSLayoutAttributeHeight
+                                                          multiplier:1.0
+                                                            constant:0.0]];
+  
+  [self.constraints addObject:[NSLayoutConstraint constraintWithItem:_searchCloseButton
+                                                           attribute:NSLayoutAttributeTop
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:_searchBar
+                                                           attribute:NSLayoutAttributeTop
                                                           multiplier:1.0
                                                             constant:0.0]];
   [self.view addConstraints:self.constraints];
 }
 
+- (void)setupSearchBar
+{
+  _searchBar = [[UISearchBar alloc] init];
+  _searchBar.barTintColor = kColorLightBlue;
+  _searchBar.translatesAutoresizingMaskIntoConstraints = NO;
+  _searchBar.delegate = self;
+  _searchBar.searchBarStyle = UISearchBarStyleProminent;
+  _searchBar.placeholder = NSLocalizedString(@"Search all the things!", nil);
+  _searchBar.clearsContextBeforeDrawing = YES;
+  _searchBar.showsCancelButton = NO;
+  _searchBar.showsBookmarkButton = NO;
+  _searchBar.translucent = NO;
+  
+  [self.view addSubview:_searchBar];
+  
+  _searchCloseButton = [[UIButton alloc] init];
+  _searchCloseButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [_searchCloseButton setTitle:@"Cancel" forState:UIControlStateNormal];
+  [_searchCloseButton setTitleColor:kColorDarkBlue forState:UIControlStateNormal];
+  [_searchCloseButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
+  _searchCloseButton.titleLabel.font = kFontRegular;
+  _searchCloseButton.backgroundColor = kColorLightBlue;
+  _searchCloseButton.enabled = NO;
+  _searchCloseButton.userInteractionEnabled = YES;
+  _searchCloseButton.layer.borderWidth = 0.5;
+  _searchCloseButton.layer.borderColor = [kColorDarkestBlue CGColor];
+  [_searchCloseButton addTarget:self action:@selector(searchBarCancelButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_searchCloseButton];
+}
+
+#pragma mark - ContainerView
+
 - (void)dismissSearchGifViewController
 {
-  if (!self.searchVC) {
-    return;
-  }
+  _searchCloseButton.enabled = NO;
+  [_searchCloseButton setTitle:@"Cancel" forState:UIControlStateNormal];
   self.searchBar.text = nil;
   [self.searchBar resignFirstResponder];
   [self.view layoutIfNeeded];
+  
+  if (!self.searchVC) {
+    return;
+  }
   
   [UIView animateWithDuration:kTimeSearchVCSlide animations:^{
     [self.view removeConstraint:self.searchVCTopConstraint];
@@ -143,6 +175,9 @@
 
 - (void)showSearchGifViewController
 {
+  _searchCloseButton.enabled = YES;
+  [_searchCloseButton setTitle:@"Close" forState:UIControlStateNormal];
+  
   if (!self.searchVC) {
     self.searchVC = [[SearchGifViewController alloc] init];
     self.searchVC.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -234,6 +269,12 @@
 }
 
 #pragma mark - UISearchBarDelegate
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+  _searchCloseButton.enabled = YES;
+  [_searchCloseButton setTitle:@"Cancel" forState:UIControlStateNormal];
+}
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {

@@ -20,7 +20,6 @@ static NSString *headerCellReuseId = @"headerCellReuseId";
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSMutableArray *constraints;
-@property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, assign) NSInteger offset;
 @property (nonatomic, assign) BOOL loadingGifs;
 @end
