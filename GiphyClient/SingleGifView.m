@@ -11,13 +11,14 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SingleGifView ()
-@property (nonatomic, strong) UIView      *containerView;
-@property (nonatomic, strong) UIView      *buttonContainerView;
-@property (nonatomic, strong) UIImageView *singleGifImageView;
-@property (nonatomic, strong) UILabel     *captionLabel; // @"caption"
-@property (nonatomic, strong) UILabel     *rating; // @"rating"
-@property (nonatomic, strong) UIButton    *shareSMSButton;
-@property (nonatomic, strong) UIButton    *clipboardButton;
+@property (nonatomic, strong) UIView       *containerView;
+@property (nonatomic, strong) UIView       *buttonContainerView;
+@property (nonatomic, strong) UIImageView  *singleGifImageView;
+@property (nonatomic, strong) UILabel      *captionLabel; // @"caption"
+@property (nonatomic, strong) UILabel      *rating; // @"rating"
+@property (nonatomic, strong) UIButton     *shareSMSButton;
+@property (nonatomic, strong) UIButton     *clipboardButton;
+@property (nonatomic, strong) NSDictionary *singleGifDict;
 @end
 
 @implementation SingleGifView
@@ -28,10 +29,11 @@
     self.clipsToBounds = YES;
     self.backgroundColor = kColorYellow;
     
+    _singleGifDict = dict;
+    
     _containerView = [[UIView alloc] init];
     _containerView.translatesAutoresizingMaskIntoConstraints = NO;
     _containerView.backgroundColor = [UIColor clearColor];
-    _containerView.clipsToBounds = YES;
     
     _buttonContainerView = [[UIView alloc] init];
     _buttonContainerView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -41,8 +43,8 @@
     _singleGifImageView = [[UIImageView alloc] init];
     _singleGifImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    NSURL *imageURL = dict[@"images"][@"fixed_height"][@"url"];
-    
+    NSURL *imageURL = _singleGifDict[@"images"][@"fixed_width"][@"url"];
+
     __weak SingleGifView *welf = self;
     
     [_singleGifImageView sd_setImageWithURL:imageURL placeholderImage:kPlaceholderImage options:SDWebImageHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
@@ -157,27 +159,40 @@
   // the larger containerView
   
   NSMutableArray *constraints = [@[] mutableCopy];
+  
+  NSDictionary *dict =  [self.singleGifDict objectForKey:@"images"][@"fixed_width"];
+  NSInteger containerHeight = [[dict objectForKey:@"height"] integerValue];
+  NSInteger containerWidth = [[dict objectForKey:@"width"] integerValue];
+//  NSLog(@"%li, %li", containerHeight, containerWidth);
   [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
                                                       attribute:NSLayoutAttributeTop
                                                       relatedBy:NSLayoutRelationEqual
                                                          toItem:self
                                                       attribute:NSLayoutAttributeTop
                                                      multiplier:1.0
-                                                       constant:0.0]];
+                                                       constant:20.0]];
   
   [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
                                                       attribute:NSLayoutAttributeWidth
-                                                      relatedBy:NSLayoutRelationEqual
-                                                         toItem:self
-                                                      attribute:NSLayoutAttributeWidth
+                                                      relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                         toItem:nil
+                                                      attribute:NSLayoutAttributeNotAnAttribute
                                                      multiplier:1.0
-                                                       constant:0.0]];
+                                                       constant:containerWidth]];
   
   [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
-                                                      attribute:NSLayoutAttributeLeft
+                                                      attribute:NSLayoutAttributeHeight
+                                                      relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                         toItem:nil
+                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                     multiplier:1.0
+                                                       constant:containerHeight]];
+  
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
+                                                      attribute:NSLayoutAttributeCenterX
                                                       relatedBy:NSLayoutRelationEqual
                                                          toItem:self
-                                                      attribute:NSLayoutAttributeLeft
+                                                      attribute:NSLayoutAttributeCenterX
                                                      multiplier:1.0
                                                        constant:0.0]];
   [self addConstraints:constraints];
