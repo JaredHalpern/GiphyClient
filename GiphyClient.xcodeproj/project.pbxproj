@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7F30E2C41BA7300700B13EB6 /* SearchResultsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F30E2C31BA7300700B13EB6 /* SearchResultsHeaderView.m */; };
 		7F30E2C71BA8C20500B13EB6 /* nyan.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F30E2C61BA8C20500B13EB6 /* nyan.png */; };
+		7F30E2CA1BA9301A00B13EB6 /* GifCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F30E2C91BA9301A00B13EB6 /* GifCollectionViewCell.m */; };
 		7FF77A421BA21D3D00F95108 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A411BA21D3D00F95108 /* main.m */; };
 		7FF77A451BA21D3D00F95108 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A441BA21D3D00F95108 /* AppDelegate.m */; };
 		7FF77A4D1BA21D3D00F95108 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FF77A4C1BA21D3D00F95108 /* Images.xcassets */; };
@@ -38,6 +39,8 @@
 		7F30E2C21BA7300700B13EB6 /* SearchResultsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsHeaderView.h; sourceTree = "<group>"; };
 		7F30E2C31BA7300700B13EB6 /* SearchResultsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsHeaderView.m; sourceTree = "<group>"; };
 		7F30E2C61BA8C20500B13EB6 /* nyan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nyan.png; sourceTree = "<group>"; };
+		7F30E2C81BA9301A00B13EB6 /* GifCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifCollectionViewCell.h; sourceTree = "<group>"; };
+		7F30E2C91BA9301A00B13EB6 /* GifCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifCollectionViewCell.m; sourceTree = "<group>"; };
 		7FF77A3C1BA21D3D00F95108 /* GiphyClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GiphyClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF77A401BA21D3D00F95108 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FF77A411BA21D3D00F95108 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -132,6 +135,8 @@
 				7FF77A441BA21D3D00F95108 /* AppDelegate.m */,
 				7FF77A7B1BA3D82C00F95108 /* GifDisplayViewController.h */,
 				7FF77A7C1BA3D82C00F95108 /* GifDisplayViewController.m */,
+				7F30E2C81BA9301A00B13EB6 /* GifCollectionViewCell.h */,
+				7F30E2C91BA9301A00B13EB6 /* GifCollectionViewCell.m */,
 				7FF77A651BA31DD200F95108 /* TrendingViewController.h */,
 				7FF77A661BA31DD200F95108 /* TrendingViewController.m */,
 				7F30E2C51BA7300C00B13EB6 /* SearchGifViewController */,
@@ -335,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FF77A6A1BA32AB300F95108 /* APIManager.m in Sources */,
+				7F30E2CA1BA9301A00B13EB6 /* GifCollectionViewCell.m in Sources */,
 				7FF77A831BA3DCBD00F95108 /* SingleGifView.m in Sources */,
 				7FF77A7D1BA3D82C00F95108 /* GifDisplayViewController.m in Sources */,
 				7FF77A671BA31DD200F95108 /* TrendingViewController.m in Sources */,

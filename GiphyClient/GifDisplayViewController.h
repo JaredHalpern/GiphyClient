@@ -12,6 +12,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "SingleGifViewController.h"
 #import <SVProgressHUD.h>
+#import "GifCollectionViewCell.h"
 
 static NSString *cellReuseId = @"reuseId";
 static NSString *headerCellReuseId = @"headerCellReuseId";

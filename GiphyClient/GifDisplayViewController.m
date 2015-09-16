@@ -60,7 +60,7 @@
   _collectionView.scrollEnabled = YES;
   _collectionView.contentInset = UIEdgeInsetsZero;
   _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-  [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellReuseId];
+  [_collectionView registerClass:[GifCollectionViewCell class] forCellWithReuseIdentifier:cellReuseId];
   [self.view addSubview:_collectionView];
   
   [self setupSearchBar];
@@ -301,50 +301,10 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-  UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseId forIndexPath:indexPath];
-  cell.clipsToBounds = YES;
-  
+  GifCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellReuseId forIndexPath:indexPath];
   NSURL *imageURL = [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_width_downsampled"][@"url"];
-  UIImageView *imageView = [[UIImageView alloc] init];
-  imageView.translatesAutoresizingMaskIntoConstraints = NO;
+  [cell setImageURL:imageURL];
   
-  [imageView sd_setImageWithURL:imageURL placeholderImage:kPlaceholderImage options:SDWebImageProgressiveDownload completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-    
-  }];
-  
-  [cell.contentView addSubview:imageView];
-  
-  [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                   attribute:NSLayoutAttributeCenterX
-                                                   relatedBy:NSLayoutRelationEqual
-                                                      toItem:cell
-                                                   attribute:NSLayoutAttributeCenterX
-                                                  multiplier:1.0
-                                                    constant:0.0]];
-  
-  [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                   attribute:NSLayoutAttributeCenterY
-                                                   relatedBy:NSLayoutRelationEqual
-                                                      toItem:cell
-                                                   attribute:NSLayoutAttributeCenterY
-                                                  multiplier:1.0
-                                                    constant:0.0]];
-  
-  [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                   attribute:NSLayoutAttributeWidth
-                                                   relatedBy:NSLayoutRelationEqual
-                                                      toItem:cell
-                                                   attribute:NSLayoutAttributeWidth
-                                                  multiplier:1.0
-                                                    constant:0.0]];
-  
-  [cell addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                   attribute:NSLayoutAttributeHeight
-                                                   relatedBy:NSLayoutRelationEqual
-                                                      toItem:cell
-                                                   attribute:NSLayoutAttributeHeight
-                                                  multiplier:1.0
-                                                    constant:0.0]];
   return cell;
 }
 
