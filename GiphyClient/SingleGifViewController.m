@@ -76,12 +76,12 @@
 
 #pragma mark - Private
 
-- (void)downloadImageDataInBackgroundWithCompletion:(void (^)(void))completion
+- (void)downloadOriginalImageDataInBackgroundWithCompletion:(void (^)(void))completion
 {
   __weak SingleGifViewController *welf = self;
   
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    NSURL *imageURL = [NSURL URLWithString:welf.imageDict[@"images"][@"fixed_height"][@"url"]];
+    NSURL *imageURL = [NSURL URLWithString:welf.imageDict[@"images"][@"original"][@"url"]];
     NSURLSession *defaultSession = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [defaultSession dataTaskWithURL:imageURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
       
@@ -109,7 +109,7 @@
   if (!self.imageData) {
     __weak SingleGifViewController *welf = self;
     
-    [self downloadImageDataInBackgroundWithCompletion:^{
+    [self downloadOriginalImageDataInBackgroundWithCompletion:^{
       [pasteboard setData:welf.imageData forPasteboardType:(__bridge NSString *)uti];
       [SVProgressHUD dismiss];
       if (uti){
@@ -139,7 +139,7 @@
   if (!self.imageData) {    
     __weak SingleGifViewController *welf = self;
     
-    [self downloadImageDataInBackgroundWithCompletion:^{
+    [self downloadOriginalImageDataInBackgroundWithCompletion:^{
       [messageController addAttachmentData:welf.imageData
                             typeIdentifier:(NSString *)kUTTypeGIF
                                   filename:@"image.gif"];
