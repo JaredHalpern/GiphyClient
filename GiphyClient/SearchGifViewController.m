@@ -142,7 +142,7 @@
 - (void)setSearchTerms:(NSString *)searchTerms
 {
   _searchTerms = searchTerms;
-  [self.collectionView reloadData]; // overreaching but see if this works
+  [self.collectionView reloadData];
 }
 
 @end
