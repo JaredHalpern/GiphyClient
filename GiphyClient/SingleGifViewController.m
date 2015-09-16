@@ -136,11 +136,7 @@
   MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
   messageController.messageComposeDelegate = self;
   
-  if (!self.imageData) {
-    // if we dont have the imagedata for some reason.
-    // this will be called rarely, but since we send the image data to a background queue initially, we shouldn't make assumptions
-    // that we'll always have the data by the time the user hits the send button, especially if its a great gif and they're excited to send it.
-    
+  if (!self.imageData) {    
     __weak SingleGifViewController *welf = self;
     
     [self downloadImageDataInBackgroundWithCompletion:^{
