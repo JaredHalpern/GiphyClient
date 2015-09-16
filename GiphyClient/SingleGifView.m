@@ -38,7 +38,6 @@
     _buttonContainerView = [[UIView alloc] init];
     _buttonContainerView.translatesAutoresizingMaskIntoConstraints = NO;
     _buttonContainerView.backgroundColor = [UIColor clearColor];
-    _buttonContainerView.clipsToBounds = YES;
     
     _singleGifImageView = [[UIImageView alloc] init];
     _singleGifImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -76,26 +75,27 @@
                                      
                                    }];
     
-    [_containerView addSubview:_singleGifImageView];
-    
     _shareSMSButton = [[UIButton alloc] init];
     _shareSMSButton.titleLabel.font = kFontRegular;
     _shareSMSButton.titleLabel.textColor = kColorDarkBlue;
+    _shareSMSButton.backgroundColor = [UIColor clearColor];
     [_shareSMSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_shareSMSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [_shareSMSButton setTitle:@"Share via SMS" forState:UIControlStateNormal];
     _shareSMSButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_shareSMSButton addTarget:self action:@selector(didPressShareSMSButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_buttonContainerView addSubview:_shareSMSButton];
     
     _clipboardButton = [[UIButton alloc] init];
     _clipboardButton.titleLabel.font = kFontRegular;
     _clipboardButton.titleLabel.textColor = kColorDarkBlue;
+    _clipboardButton.backgroundColor = [UIColor clearColor];
     [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
     _clipboardButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_clipboardButton addTarget:self action:@selector(didPressCopyToClipboardButton:) forControlEvents:UIControlEventTouchUpInside];
+
+    [_buttonContainerView addSubview:_shareSMSButton];
     [_buttonContainerView addSubview:_clipboardButton];
-    
+    [_containerView addSubview:_singleGifImageView];    
     [_containerView addSubview:_buttonContainerView];
     [self addSubview:_containerView];
     
@@ -150,22 +150,6 @@
                                                               multiplier:1.0
                                                                 constant:0.0]];
   
-  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_buttonContainerView
-                                                               attribute:NSLayoutAttributeBottom
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self.containerView
-                                                               attribute:NSLayoutAttributeBottom
-                                                              multiplier:1.0
-                                                                constant:0.0]];
-  
-  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_buttonContainerView
-                                                               attribute:NSLayoutAttributeHeight
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:nil
-                                                               attribute:NSLayoutAttributeNotAnAttribute
-                                                              multiplier:1.0
-                                                                constant:30.0]];
-  
   [_containerView addConstraints:containerConstraints];
   
   // Buttons, inside their own buttonContainer, inside the larger containerView
@@ -206,6 +190,22 @@
                                                       attribute:NSLayoutAttributeTop
                                                      multiplier:1.0
                                                        constant:20.0]];
+  
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
+                                                      attribute:NSLayoutAttributeHeight
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self
+                                                      attribute:NSLayoutAttributeHeight
+                                                     multiplier:1.0
+                                                       constant:0.0]];
+  
+  [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
+                                                      attribute:NSLayoutAttributeWidth
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self
+                                                      attribute:NSLayoutAttributeWidth
+                                                     multiplier:1.0
+                                                       constant:0.0]];
   
   [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
                                                       attribute:NSLayoutAttributeCenterX
