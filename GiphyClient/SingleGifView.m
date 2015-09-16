@@ -44,20 +44,39 @@
     _singleGifImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     NSURL *imageURL = _singleGifDict[@"images"][@"fixed_width"][@"url"];
-
+    
     __weak SingleGifView *welf = self;
     
-    [_singleGifImageView sd_setImageWithURL:imageURL placeholderImage:kPlaceholderImage options:SDWebImageHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-      
-    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-      if (error) {
-        NSLog(@"%s - %@", __PRETTY_FUNCTION__, error);
-      }
-      welf.singleGifImage = image;
-    }];
+    MBProgressHUD *progressHUD = [MBProgressHUD showHUDAddedTo:_singleGifImageView animated:YES];
+    progressHUD.mode = MBProgressHUDModeAnnularDeterminate;
+    progressHUD.delegate = self;
+    [progressHUD show:YES];
+    
+    [_singleGifImageView sd_setImageWithURL:imageURL placeholderImage:kPlaceholderImage
+                                    options:SDWebImageHighPriority
+                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                       CGFloat recSize = [[NSNumber numberWithInteger:receivedSize] floatValue];
+                                       CGFloat expSize = [[NSNumber numberWithInteger:expectedSize] floatValue];
+                                       CGFloat progress = (recSize / expSize);
+                                       progressHUD.progress = progress;
+                                     });
+                                     
+                                   } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                       [progressHUD hide:YES];
+                                     });
+                                     
+                                     if (error) {
+                                       NSLog(@"%s - %@", __PRETTY_FUNCTION__, error);
+                                     }
+                                     
+                                     welf.singleGifImage = image;
+                                     
+                                   }];
     
     [_containerView addSubview:_singleGifImageView];
-        
+    
     _shareSMSButton = [[UIButton alloc] init];
     _shareSMSButton.titleLabel.font = kFontRegular;
     _shareSMSButton.titleLabel.textColor = kColorDarkBlue;
@@ -105,7 +124,7 @@
                                                                attribute:NSLayoutAttributeCenterX
                                                               multiplier:1.0
                                                                 constant:0.0]];
-
+  
   [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_singleGifImageView
                                                                attribute:NSLayoutAttributeWidth
                                                                relatedBy:NSLayoutRelationEqual

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @protocol SingleGifViewDelegate <NSObject>
 @required
@@ -14,7 +15,7 @@
 - (void)copyToClipboardButtonPressed;
 @end
 
-@interface SingleGifView : UIView
+@interface SingleGifView : UIView <MBProgressHUDDelegate>
 @property (nonatomic, strong) UIImage *singleGifImage;
 @property (nonatomic, assign) id <SingleGifViewDelegate> delegate;
 - (instancetype)initWithDict:(NSDictionary *)dict;
