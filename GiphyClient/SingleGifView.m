@@ -42,16 +42,17 @@
     _singleGifImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
     NSURL *imageURL = dict[@"images"][@"fixed_height"][@"url"];
+    
     __weak SingleGifView *welf = self;
-    [_singleGifImageView sd_setImageWithURL:imageURL
-                           placeholderImage:[UIImage imageNamed:@"nyan.png"]
-                                    options:SDWebImageProgressiveDownload
-                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                    if (error) {
-                                      NSLog(@"%s - %@", __PRETTY_FUNCTION__, error);
-                                    }
-                                    welf.singleGifImage = image;
-                                  }];
+    
+    [_singleGifImageView sd_setImageWithURL:imageURL placeholderImage:kPlaceholderImage options:SDWebImageHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+      
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+      if (error) {
+        NSLog(@"%s - %@", __PRETTY_FUNCTION__, error);
+      }
+      welf.singleGifImage = image;
+    }];
     
     [_containerView addSubview:_singleGifImageView];
         
