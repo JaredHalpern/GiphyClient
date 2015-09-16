@@ -24,8 +24,12 @@
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:trendingVC];
   [navController setNavigationBarHidden:YES];
   self.window.rootViewController = navController;
-  [self.window makeKeyAndVisible];
   
+  [[UINavigationBar appearance] setTintColor:kColorDarkBlue];
+  [navController.navigationBar setBarTintColor:kColorLightBlue];
+  [navController.navigationBar setTranslucent:NO];
+  
+  [self.window makeKeyAndVisible];
   return YES;
 }
 
