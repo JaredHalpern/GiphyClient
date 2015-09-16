@@ -8,6 +8,7 @@
 
 #import "SingleGifViewController.h"
 #import "SingleGifView.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
 @interface SingleGifViewController ()
 @property (nonatomic, strong) SingleGifView *singleGifView;
@@ -33,18 +34,65 @@
   [self setView:_singleGifView];
 }
 
+#pragma mark - MFMessageComposeViewControllerDelegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result
+{
+  switch (result) {
+      
+    case MessageComposeResultCancelled:
+      break;
+      
+    case MessageComposeResultFailed:
+    {
+      UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Failed to send SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      [warningAlert show];
+      break;
+    }
+      
+    case MessageComposeResultSent:
+    default:
+      break;
+  }
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - SingleGifViewDelegate
 
 - (void)shareSMSButtonPressed
 {
-  [self share];
+  [self shareViaSMS];
 }
 
 - (void)copyToClipboardButtonPressed
 {
-  [self share];
+//  [self share];
 }
 
+- (void)shareViaSMS
+{
+  if (![MFMessageComposeViewController canSendText]) {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cannot send text!" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    return;
+  }
+  
+  MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+  messageController.messageComposeDelegate = self;
+
+  NSURL *imageURL = [NSURL URLWithString:self.imageDict[@"images"][@"fixed_height"][@"url"]];
+  NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+
+  [messageController addAttachmentData:imageData
+             typeIdentifier:(NSString *)kUTTypeGIF
+                   filename:@"image.gif"];
+  
+  [self presentViewController:messageController animated:YES completion:nil];
+}
+
+/*
+ // New way of sharing via UIActivityViewController
 - (void)share
 {
   NSURL *imageURL = [NSURL URLWithString:self.imageDict[@"images"][@"fixed_height"][@"url"]];
@@ -86,4 +134,5 @@
   
   [self presentViewController:activityVC animated:YES completion:nil];
 }
+ */
 @end

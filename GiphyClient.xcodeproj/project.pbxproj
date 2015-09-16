@@ -10,6 +10,7 @@
 		7F30E2C41BA7300700B13EB6 /* SearchResultsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F30E2C31BA7300700B13EB6 /* SearchResultsHeaderView.m */; };
 		7F30E2C71BA8C20500B13EB6 /* nyan.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F30E2C61BA8C20500B13EB6 /* nyan.png */; };
 		7F30E2CA1BA9301A00B13EB6 /* GifCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F30E2C91BA9301A00B13EB6 /* GifCollectionViewCell.m */; };
+		7F30E2CC1BA9FD4F00B13EB6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F30E2CB1BA9FD4F00B13EB6 /* MobileCoreServices.framework */; };
 		7FF77A421BA21D3D00F95108 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A411BA21D3D00F95108 /* main.m */; };
 		7FF77A451BA21D3D00F95108 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FF77A441BA21D3D00F95108 /* AppDelegate.m */; };
 		7FF77A4D1BA21D3D00F95108 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FF77A4C1BA21D3D00F95108 /* Images.xcassets */; };
@@ -41,6 +42,7 @@
 		7F30E2C61BA8C20500B13EB6 /* nyan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nyan.png; sourceTree = "<group>"; };
 		7F30E2C81BA9301A00B13EB6 /* GifCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifCollectionViewCell.h; sourceTree = "<group>"; };
 		7F30E2C91BA9301A00B13EB6 /* GifCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifCollectionViewCell.m; sourceTree = "<group>"; };
+		7F30E2CB1BA9FD4F00B13EB6 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7FF77A3C1BA21D3D00F95108 /* GiphyClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GiphyClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF77A401BA21D3D00F95108 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FF77A411BA21D3D00F95108 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F30E2CC1BA9FD4F00B13EB6 /* MobileCoreServices.framework in Frameworks */,
 				B3E6E10CC1D5BC9C39EECE54 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,6 +93,7 @@
 		29F262EC4081515D124B2D08 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7F30E2CB1BA9FD4F00B13EB6 /* MobileCoreServices.framework */,
 				7D86E3F272A850709A0EA1B7 /* libPods.a */,
 			);
 			name = Frameworks;

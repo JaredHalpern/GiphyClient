@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SingleGifView.h"
+#import <MessageUI/MessageUI.h>
 
-@interface SingleGifViewController : UIViewController <SingleGifViewDelegate>
+@interface SingleGifViewController : UIViewController <SingleGifViewDelegate, MFMessageComposeViewControllerDelegate>
 - (instancetype)initWithDict:(NSDictionary *)imageDict;
 @end
