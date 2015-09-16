@@ -11,7 +11,7 @@
 
 @interface SingleGifViewController ()
 @property (nonatomic, strong) SingleGifView *singleGifView;
-@property (nonatomic, strong) NSDictionary *imageDict;
+@property (nonatomic, strong) NSDictionary  *imageDict;
 @end
 
 @implementation SingleGifViewController

@@ -11,13 +11,13 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SingleGifView ()
-@property (nonatomic, strong) UIView *containerView;
-@property (nonatomic, strong) UIView *buttonContainerView;
+@property (nonatomic, strong) UIView      *containerView;
+@property (nonatomic, strong) UIView      *buttonContainerView;
 @property (nonatomic, strong) UIImageView *singleGifImageView;
-@property (nonatomic, strong) UILabel *captionLabel; // @"caption"
-@property (nonatomic, strong) UILabel *rating; // @"rating"
-@property (nonatomic, strong) UIButton *shareSMSButton;
-@property (nonatomic, strong) UIButton *clipboardButton;
+@property (nonatomic, strong) UILabel     *captionLabel; // @"caption"
+@property (nonatomic, strong) UILabel     *rating; // @"rating"
+@property (nonatomic, strong) UIButton    *shareSMSButton;
+@property (nonatomic, strong) UIButton    *clipboardButton;
 @end
 
 @implementation SingleGifView
