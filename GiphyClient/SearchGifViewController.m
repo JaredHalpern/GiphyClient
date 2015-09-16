@@ -113,7 +113,7 @@
       self.loadingGifs = YES;
       
       __weak SearchGifViewController *welf = self;
-      NSLog(@"searchTerms: %@", self.searchTerms);
+
       [[APIManager sharedManager] searchTerms:self.searchTerms withOffset:(self.offset + kWindowSize) andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
         
         welf.offset = offset;
@@ -122,7 +122,7 @@
         for (NSInteger i = 0; i < data.count; i++) {
           [indicesToAppend addObject:[NSIndexPath indexPathForItem:(welf.dataArray.count + i) inSection:0]];
         }
-        NSLog(@"%s - added %li images", __PRETTY_FUNCTION__, indicesToAppend.count);
+        
         welf.dataArray = [[welf.dataArray arrayByAddingObjectsFromArray:data] mutableCopy];
         
         [welf.collectionView performBatchUpdates:^{
@@ -130,7 +130,6 @@
         } completion:^(BOOL finished) {
           self.loadingGifs = NO;
           [SVProgressHUD dismiss];
-          NSLog(@"%s done loading", __PRETTY_FUNCTION__);
         }];
       }];
     }
@@ -142,7 +141,6 @@
 - (void)setSearchTerms:(NSString *)searchTerms
 {
   _searchTerms = searchTerms;
-  [self.collectionView reloadData];
 }
 
 @end

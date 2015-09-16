@@ -139,8 +139,8 @@
 
 - (void)dismissSearchGifViewController
 {
-  _searchCloseButton.enabled = NO;
-  [_searchCloseButton setTitle:@"Cancel" forState:UIControlStateNormal];
+  self.searchCloseButton.enabled = NO;
+  [self.searchCloseButton setTitle:@"Cancel" forState:UIControlStateDisabled];
   self.searchBar.text = nil;
   [self.searchBar resignFirstResponder];
   [self.view layoutIfNeeded];
@@ -175,8 +175,8 @@
 
 - (void)showSearchGifViewController
 {
-  _searchCloseButton.enabled = YES;
-  [_searchCloseButton setTitle:@"Close" forState:UIControlStateNormal];
+  self.searchCloseButton.enabled = YES;
+  [self.searchCloseButton setTitle:@"Close" forState:UIControlStateNormal];
   
   if (!self.searchVC) {
     self.searchVC = [[SearchGifViewController alloc] init];
@@ -272,8 +272,8 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-  _searchCloseButton.enabled = YES;
-  [_searchCloseButton setTitle:@"Cancel" forState:UIControlStateNormal];
+  self.searchCloseButton.enabled = YES;
+  [self.searchCloseButton setTitle:@"Cancel" forState:UIControlStateNormal];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -365,7 +365,15 @@
   NSInteger width =  [[dict objectForKey:@"width"] integerValue];
   NSInteger height = [[dict objectForKey:@"height"] integerValue];
 
-  return CGSizeMake(width*1.4, height*1.4); // scale up
+  return CGSizeMake(width * 1.4, height * 1.4); // scale up
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView;
+{
+  self.searchCloseButton.enabled = NO;
+  self.searchBar.text = @"";
 }
 
 @end
