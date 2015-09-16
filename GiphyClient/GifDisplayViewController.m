@@ -257,6 +257,8 @@
   
   __weak GifDisplayViewController *welf = self;
   
+  // do the initial search, so the data is ready faster after the search screen presents itself
+  // rather than waiting for it to load
   [[APIManager sharedManager] searchTerms:self.searchBar.text withOffset:(self.offset) andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
     [welf.searchVC setSearchTerms:searchTerms];    
     welf.searchVC.offset = offset;
