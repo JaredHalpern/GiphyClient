@@ -13,6 +13,7 @@
 @interface SingleGifViewController ()
 @property (nonatomic, strong) SingleGifView *singleGifView;
 @property (nonatomic, strong) NSDictionary  *imageDict;
+@property (nonatomic, strong) NSData        *imageData;
 @end
 
 @implementation SingleGifViewController
@@ -23,6 +24,9 @@
     NSAssert(imageDict, @"Must initialize with dictionary.");
     _imageDict = imageDict;
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    [self downloadImageDataInBackgroundWithCompletion:^{
+//      NSLog(@"%s - downloaded imagedata in background", __PRETTY_FUNCTION__);
+    }];
   }
   return self;
 }
@@ -45,7 +49,7 @@
       
     case MessageComposeResultFailed:
     {
-      UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Failed to send SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Unable to send SMS." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
       [warningAlert show];
       break;
     }
@@ -67,7 +71,48 @@
 
 - (void)copyToClipboardButtonPressed
 {
-//  [self share];
+  [self copyToClipboard];
+}
+
+#pragma mark - Private
+
+- (void)downloadImageDataInBackgroundWithCompletion:(void (^)(void))completion
+{
+  __weak SingleGifViewController *welf = self;
+  
+  // Download raw data in background for faster performance if/when sharing/copying
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    NSURL *imageURL = [NSURL URLWithString:welf.imageDict[@"images"][@"fixed_height"][@"url"]];
+    NSURLSession *defaultSession = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [defaultSession dataTaskWithURL:imageURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      
+      if (error) {
+        NSLog(@"%s - %@", __PRETTY_FUNCTION__, error.description);
+        
+      } else {
+        NSLog(@"%s - done downloading data", __PRETTY_FUNCTION__);
+        
+        welf.imageData = data;
+        
+        if (completion) {
+          completion();
+        }
+      }
+    }];
+    [dataTask resume];
+  });
+  
+}
+
+- (void)copyToClipboard
+{
+  UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+  CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)@"gif", NULL);
+  [pasteboard setData:self.imageData forPasteboardType:(__bridge NSString *)uti];
+  
+  if (uti){
+    CFRelease(uti);
+  }
 }
 
 - (void)shareViaSMS
@@ -80,15 +125,30 @@
   
   MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
   messageController.messageComposeDelegate = self;
-
-  NSURL *imageURL = [NSURL URLWithString:self.imageDict[@"images"][@"fixed_height"][@"url"]];
-  NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-
-  [messageController addAttachmentData:imageData
-             typeIdentifier:(NSString *)kUTTypeGIF
-                   filename:@"image.gif"];
   
-  [self presentViewController:messageController animated:YES completion:nil];
+  if (!self.imageData) {
+    // if we dont have the imagedata for some reason.
+    // this will likely never be called, but since we send the image data to a background queue initially, we shouldn't make assumptions
+    // that we'll always have the data by the time the user hits the send button, especially if its a great gif and they're excited to send it.
+    
+    __weak SingleGifViewController *welf = self;
+    
+    [self downloadImageDataInBackgroundWithCompletion:^{
+      [messageController addAttachmentData:welf.imageData
+                            typeIdentifier:(NSString *)kUTTypeGIF
+                                  filename:@"image.gif"];
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:messageController animated:YES completion:nil];
+      });
+    }];
+  } else {
+    [messageController addAttachmentData:self.imageData
+                          typeIdentifier:(NSString *)kUTTypeGIF
+                                filename:@"image.gif"];
+    
+    [self presentViewController:messageController animated:YES completion:nil];
+  }
 }
 
 /*
