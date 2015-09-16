@@ -89,6 +89,9 @@
   // All-encompassing containerView
   
   NSMutableArray *containerConstraints = [@[] mutableCopy];
+  NSDictionary *dict =  [self.singleGifDict objectForKey:@"images"][@"fixed_width"];
+  NSInteger containerHeight = [[dict objectForKey:@"height"] integerValue];
+  NSInteger containerWidth = [[dict objectForKey:@"width"] integerValue];
   
   [containerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(22.5)-[_singleGifImageView]-(20)-[_buttonContainerView]|"
                                                                                     options:NSLayoutFormatAlignAllCenterX
@@ -102,6 +105,22 @@
                                                                attribute:NSLayoutAttributeCenterX
                                                               multiplier:1.0
                                                                 constant:0.0]];
+
+  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_singleGifImageView
+                                                               attribute:NSLayoutAttributeWidth
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:nil
+                                                               attribute:NSLayoutAttributeNotAnAttribute
+                                                              multiplier:1.0
+                                                                constant:containerWidth]];
+  
+  [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_singleGifImageView
+                                                               attribute:NSLayoutAttributeHeight
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:nil
+                                                               attribute:NSLayoutAttributeNotAnAttribute
+                                                              multiplier:1.0
+                                                                constant:containerHeight]];
   
   [containerConstraints addObject:[NSLayoutConstraint constraintWithItem:_buttonContainerView
                                                                attribute:NSLayoutAttributeCenterX
@@ -160,10 +179,6 @@
   
   NSMutableArray *constraints = [@[] mutableCopy];
   
-  NSDictionary *dict =  [self.singleGifDict objectForKey:@"images"][@"fixed_width"];
-  NSInteger containerHeight = [[dict objectForKey:@"height"] integerValue];
-  NSInteger containerWidth = [[dict objectForKey:@"width"] integerValue];
-//  NSLog(@"%li, %li", containerHeight, containerWidth);
   [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
                                                       attribute:NSLayoutAttributeTop
                                                       relatedBy:NSLayoutRelationEqual
@@ -171,22 +186,6 @@
                                                       attribute:NSLayoutAttributeTop
                                                      multiplier:1.0
                                                        constant:20.0]];
-  
-  [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
-                                                      attribute:NSLayoutAttributeWidth
-                                                      relatedBy:NSLayoutRelationGreaterThanOrEqual
-                                                         toItem:nil
-                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                     multiplier:1.0
-                                                       constant:containerWidth]];
-  
-  [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
-                                                      attribute:NSLayoutAttributeHeight
-                                                      relatedBy:NSLayoutRelationGreaterThanOrEqual
-                                                         toItem:nil
-                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                     multiplier:1.0
-                                                       constant:containerHeight]];
   
   [constraints addObject:[NSLayoutConstraint constraintWithItem:_containerView
                                                       attribute:NSLayoutAttributeCenterX
