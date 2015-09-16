@@ -8,6 +8,7 @@
 
 #import "SingleGifViewController.h"
 #import "SingleGifView.h"
+#import <SVProgressHUD.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
 @interface SingleGifViewController ()
@@ -24,9 +25,6 @@
     NSAssert(imageDict, @"Must initialize with dictionary.");
     _imageDict = imageDict;
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    [self downloadImageDataInBackgroundWithCompletion:^{
-//      NSLog(@"%s - downloaded imagedata in background", __PRETTY_FUNCTION__);
-    }];
   }
   return self;
 }
@@ -66,11 +64,13 @@
 
 - (void)shareSMSButtonPressed
 {
+  [SVProgressHUD show];
   [self shareViaSMS];
 }
 
 - (void)copyToClipboardButtonPressed
 {
+  [SVProgressHUD show];
   [self copyToClipboard];
 }
 
@@ -80,7 +80,6 @@
 {
   __weak SingleGifViewController *welf = self;
   
-  // Download raw data in background for faster performance if/when sharing/copying
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
     NSURL *imageURL = [NSURL URLWithString:welf.imageDict[@"images"][@"fixed_height"][@"url"]];
     NSURLSession *defaultSession = [NSURLSession sharedSession];
@@ -90,8 +89,6 @@
         NSLog(@"%s - %@", __PRETTY_FUNCTION__, error.description);
         
       } else {
-        NSLog(@"%s - done downloading data", __PRETTY_FUNCTION__);
-        
         welf.imageData = data;
         
         if (completion) {
@@ -114,14 +111,14 @@
     
     [self downloadImageDataInBackgroundWithCompletion:^{
       [pasteboard setData:welf.imageData forPasteboardType:(__bridge NSString *)uti];
-      
+      [SVProgressHUD dismiss];
       if (uti){
         CFRelease(uti);
       }
     }];
   } else {
     [pasteboard setData:self.imageData forPasteboardType:(__bridge NSString *)uti];
-    
+    [SVProgressHUD dismiss];
     if (uti){
       CFRelease(uti);
     }
@@ -152,6 +149,7 @@
                                   filename:@"image.gif"];
       
       dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
         [self presentViewController:messageController animated:YES completion:nil];
       });
     }];
@@ -159,7 +157,7 @@
     [messageController addAttachmentData:self.imageData
                           typeIdentifier:(NSString *)kUTTypeGIF
                                 filename:@"image.gif"];
-    
+    [SVProgressHUD dismiss];
     [self presentViewController:messageController animated:YES completion:nil];
   }
 }
