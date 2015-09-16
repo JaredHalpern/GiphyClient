@@ -51,6 +51,7 @@
     progressHUD.mode = MBProgressHUDModeAnnularDeterminate;
     progressHUD.delegate = self;
     [progressHUD show:YES];
+    progressHUD.color = kColorLightBlueAlpha;    
     
     [_singleGifImageView sd_setImageWithURL:imageURL placeholderImage:kPlaceholderImage
                                     options:SDWebImageHighPriority
