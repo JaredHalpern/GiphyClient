@@ -13,6 +13,7 @@
 @required
 - (void)shareSMSButtonPressed;
 - (void)copyToClipboardButtonPressed;
+- (void)saveToPhotosButtonPressed;
 @end
 
 @interface SingleGifView : UIView <MBProgressHUDDelegate>
