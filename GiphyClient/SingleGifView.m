@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel      *rating; // @"rating"
 @property (nonatomic, strong) UIButton     *shareSMSButton;
 @property (nonatomic, strong) UIButton     *clipboardButton;
+@property (nonatomic, strong) UIButton     *saveImageButton;
 @property (nonatomic, strong) NSDictionary *singleGifDict;
 @end
 
@@ -93,8 +94,18 @@
     _clipboardButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_clipboardButton addTarget:self action:@selector(didPressCopyToClipboardButton:) forControlEvents:UIControlEventTouchUpInside];
 
+    _saveImageButton = [[UIButton alloc] init];
+    _saveImageButton.titleLabel.font = kFontRegular;
+    _saveImageButton.titleLabel.textColor = kColorDarkBlue;
+    _saveImageButton.backgroundColor = [UIColor clearColor];
+    [_saveImageButton setTitle:@"Save to Photos" forState:UIControlStateNormal];
+    _saveImageButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_saveImageButton addTarget:self action:@selector(didPressSaveToPhotos:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     [_buttonContainerView addSubview:_shareSMSButton];
     [_buttonContainerView addSubview:_clipboardButton];
+    [_buttonContainerView addSubview:_saveImageButton];
     [_containerView addSubview:_singleGifImageView];    
     [_containerView addSubview:_buttonContainerView];
     [self addSubview:_containerView];
@@ -180,6 +191,30 @@
                                                                     multiplier:1.0
                                                                       constant:0.0]];
   
+  [buttonContainerConstraints addObject:[NSLayoutConstraint constraintWithItem:_saveImageButton
+                                                                     attribute:NSLayoutAttributeTop
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:_shareSMSButton
+                                                                     attribute:NSLayoutAttributeBottom
+                                                                    multiplier:1.0
+                                                                      constant:10.0]];
+  
+  [buttonContainerConstraints addObject:[NSLayoutConstraint constraintWithItem:_saveImageButton
+                                                                     attribute:NSLayoutAttributeWidth
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:nil
+                                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                                    multiplier:1.0
+                                                                      constant:150.0]];
+  
+  [buttonContainerConstraints addObject:[NSLayoutConstraint constraintWithItem:_saveImageButton
+                                                                     attribute:NSLayoutAttributeCenterX
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:_buttonContainerView
+                                                                     attribute:NSLayoutAttributeCenterX
+                                                                    multiplier:1.0
+                                                                      constant:0.0]];
+  
   [_buttonContainerView addConstraints:buttonContainerConstraints];
   
   // the larger containerView
@@ -230,6 +265,12 @@
 - (void)didPressCopyToClipboardButton:(id)sender
 {
   [self.delegate copyToClipboardButtonPressed];
+}
+
+
+- (void)didPressSaveToPhotos:(id)sender
+{
+  [self.delegate saveToPhotosButtonPressed];
 }
 
 @end

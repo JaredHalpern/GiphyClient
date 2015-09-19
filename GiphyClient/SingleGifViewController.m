@@ -10,6 +10,7 @@
 #import "SingleGifView.h"
 #import <SVProgressHUD.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface SingleGifViewController ()
 @property (nonatomic, strong) SingleGifView *singleGifView;
@@ -74,6 +75,12 @@
   [self copyToClipboard];
 }
 
+- (void)saveToPhotosButtonPressed
+{
+  [SVProgressHUD show];
+  [self saveToPhotos];
+}
+
 #pragma mark - Private
 
 - (void)downloadOriginalImageDataInBackgroundWithCompletion:(void (^)(void))completion
@@ -101,6 +108,36 @@
   
 }
 
+- (void)saveToPhotos
+{
+  ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+  
+  if (!self.imageData) {
+    __weak SingleGifViewController *welf = self;
+    
+    [self downloadOriginalImageDataInBackgroundWithCompletion:^{
+      
+      [library writeImageDataToSavedPhotosAlbum:welf.imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+        NSLog(@"%s", __PRETTY_FUNCTION__);
+      }];
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Saved!" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+      });
+    }];
+    
+  } else {
+    [library writeImageDataToSavedPhotosAlbum:self.imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+      NSLog(@"%s", __PRETTY_FUNCTION__);
+    }];
+    [SVProgressHUD dismiss];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Saved!" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+  }
+}
+
 - (void)copyToClipboard
 {
   UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
@@ -115,6 +152,8 @@
       if (uti){
         CFRelease(uti);
       }
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Copied!" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      [alert show];
     }];
   } else {
     [pasteboard setData:self.imageData forPasteboardType:(__bridge NSString *)uti];
@@ -122,6 +161,8 @@
     if (uti){
       CFRelease(uti);
     }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Copied!" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
   }
 }
 
