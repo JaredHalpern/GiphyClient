@@ -314,8 +314,7 @@
   cell.layer.shadowOpacity = 1.0f;
   cell.layer.masksToBounds = NO;
   cell.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:cell.bounds cornerRadius:cell.contentView.layer.cornerRadius].CGPath;
-  
-  
+
   NSURL *imageURL = [self.dataArray objectAtIndex:indexPath.row][@"images"][@"fixed_width_downsampled"][@"url"];
   [cell setImageURL:imageURL];
   
