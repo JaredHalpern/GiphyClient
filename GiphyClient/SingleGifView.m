@@ -30,6 +30,8 @@
     self.clipsToBounds = YES;
     self.backgroundColor = kColorYellow;
     
+    NSLog(@"%@", dict);
+    
     _singleGifDict = dict;
     
     _containerView = [[UIView alloc] init];
@@ -79,7 +81,8 @@
     _shareSMSButton = [[UIButton alloc] init];
     _shareSMSButton.titleLabel.font = kFontRegular;
     _shareSMSButton.titleLabel.textColor = kColorDarkBlue;
-    _shareSMSButton.backgroundColor = [UIColor clearColor];
+    _shareSMSButton.backgroundColor = kColorLightBlue;
+    _shareSMSButton.layer.cornerRadius = 15;
     [_shareSMSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_shareSMSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [_shareSMSButton setTitle:@"Share via SMS" forState:UIControlStateNormal];
@@ -89,7 +92,8 @@
     _clipboardButton = [[UIButton alloc] init];
     _clipboardButton.titleLabel.font = kFontRegular;
     _clipboardButton.titleLabel.textColor = kColorDarkBlue;
-    _clipboardButton.backgroundColor = [UIColor clearColor];
+    _clipboardButton.backgroundColor = kColorLightBlue;
+    _clipboardButton.layer.cornerRadius = 15;
     [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
     _clipboardButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_clipboardButton addTarget:self action:@selector(didPressCopyToClipboardButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -97,7 +101,8 @@
     _saveImageButton = [[UIButton alloc] init];
     _saveImageButton.titleLabel.font = kFontRegular;
     _saveImageButton.titleLabel.textColor = kColorDarkBlue;
-    _saveImageButton.backgroundColor = [UIColor clearColor];
+    _saveImageButton.backgroundColor = kColorLightBlue;
+    _saveImageButton.layer.cornerRadius = 15;
     [_saveImageButton setTitle:@"Save to Photos" forState:UIControlStateNormal];
     _saveImageButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_saveImageButton addTarget:self action:@selector(didPressSaveToPhotos:) forControlEvents:UIControlEventTouchUpInside];
@@ -170,7 +175,7 @@
   
   NSMutableArray *buttonContainerConstraints = [@[] mutableCopy];
   
-  [buttonContainerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_shareSMSButton(120)]-(>=22)-[_clipboardButton(150)]|"
+  [buttonContainerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_shareSMSButton(140)]-(>=22)-[_clipboardButton(170)]|"
                                                                                           options:0
                                                                                           metrics:nil
                                                                                             views:NSDictionaryOfVariableBindings(_shareSMSButton, _clipboardButton)]];
