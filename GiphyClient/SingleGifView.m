@@ -113,6 +113,9 @@
   NSInteger containerHeight = [[dict objectForKey:@"height"] integerValue];
   NSInteger containerWidth = [[dict objectForKey:@"width"] integerValue];
   
+  containerHeight *= 1.3;
+  containerWidth *= 1.3;
+  
   [containerConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(22.5)-[_singleGifImageView]-(20)-[_buttonContainerView]|"
                                                                                     options:NSLayoutFormatAlignAllCenterX
                                                                                     metrics:nil
