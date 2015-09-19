@@ -260,6 +260,11 @@
   [self addConstraints:constraints];
 }
 
+- (void)dealloc
+{
+  self.delegate = nil;
+}
+
 #pragma mark - Button Methods
 
 - (void)didPressShareSMSButton:(id)sender
