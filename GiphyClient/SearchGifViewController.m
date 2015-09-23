@@ -42,7 +42,7 @@
 - (void)willMoveToParentViewController:(UIViewController *)parent
 {
   [super willMoveToParentViewController:parent];
-  self.collectionView.backgroundColor = kColorYellow;
+  self.collectionView.backgroundColor = kColorFeedBackground;
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent

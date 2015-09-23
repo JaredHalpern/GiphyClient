@@ -18,7 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
-  self.window.backgroundColor = kColorYellow;
+  self.window.backgroundColor = kColorFeedBackground;
 
   TrendingViewController *trendingVC = [[TrendingViewController alloc] init];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:trendingVC];

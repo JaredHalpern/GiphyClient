@@ -28,7 +28,7 @@
 {
   if (self = [super init]) {
     self.clipsToBounds = YES;
-    self.backgroundColor = kColorYellow;
+    self.backgroundColor = kColorFeedBackground;
     
     _singleGifDict = dict;
     

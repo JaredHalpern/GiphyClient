@@ -22,7 +22,7 @@
 
 #pragma mark - Colors
 
-#define kColorYellow            [UIColor colorWithRed:247./256. green:200./256. blue:44./256. alpha:1.0]
+#define kColorFeedBackground    [UIColor colorWithRed:59./256. green:154./256. blue:255./256. alpha:1.0]
 #define kColorLightBlue         [UIColor colorWithRed:145./256. green:223./256. blue:221./256. alpha:1.0]
 #define kColorLightBlueAlpha    [UIColor colorWithRed:145./256. green:223./256. blue:221./256. alpha:0.4]
 #define kColorDarkBlue          [UIColor colorWithRed:79./256. green:136./256. blue:134./256. alpha:1.0]
