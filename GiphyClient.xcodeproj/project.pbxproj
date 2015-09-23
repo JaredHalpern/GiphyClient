@@ -114,6 +114,26 @@
 			name = SearchGifViewController;
 			sourceTree = "<group>";
 		};
+		7F3951881BAE1C610017DBA9 /* Base View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7FF77A7B1BA3D82C00F95108 /* GifDisplayViewController.h */,
+				7FF77A7C1BA3D82C00F95108 /* GifDisplayViewController.m */,
+				7F30E2C81BA9301A00B13EB6 /* GifCollectionViewCell.h */,
+				7F30E2C91BA9301A00B13EB6 /* GifCollectionViewCell.m */,
+			);
+			name = "Base View Controller";
+			sourceTree = "<group>";
+		};
+		7F3951891BAE1C6F0017DBA9 /* Trending View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7FF77A651BA31DD200F95108 /* TrendingViewController.h */,
+				7FF77A661BA31DD200F95108 /* TrendingViewController.m */,
+			);
+			name = "Trending View Controller";
+			sourceTree = "<group>";
+		};
 		7FF77A331BA21D3D00F95108 = {
 			isa = PBXGroup;
 			children = (
@@ -141,12 +161,8 @@
 			children = (
 				7FF77A431BA21D3D00F95108 /* AppDelegate.h */,
 				7FF77A441BA21D3D00F95108 /* AppDelegate.m */,
-				7FF77A7B1BA3D82C00F95108 /* GifDisplayViewController.h */,
-				7FF77A7C1BA3D82C00F95108 /* GifDisplayViewController.m */,
-				7F30E2C81BA9301A00B13EB6 /* GifCollectionViewCell.h */,
-				7F30E2C91BA9301A00B13EB6 /* GifCollectionViewCell.m */,
-				7FF77A651BA31DD200F95108 /* TrendingViewController.h */,
-				7FF77A661BA31DD200F95108 /* TrendingViewController.m */,
+				7F3951881BAE1C610017DBA9 /* Base View Controller */,
+				7F3951891BAE1C6F0017DBA9 /* Trending View Controller */,
 				7F30E2C51BA7300C00B13EB6 /* SearchGifViewController */,
 				7FF77A861BA494E000F95108 /* SingleGifViewController */,
 				7FF77A871BA4950000F95108 /* Singleton Managers */,

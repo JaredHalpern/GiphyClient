@@ -171,6 +171,7 @@
   if (![MFMessageComposeViewController canSendText]) {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cannot send text!" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
+    [SVProgressHUD dismiss];
     return;
   }
   
