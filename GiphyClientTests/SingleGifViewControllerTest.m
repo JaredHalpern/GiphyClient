@@ -1,19 +1,18 @@
 //
-//  GiphyClientTests.m
-//  GiphyClientTests
+//  SingleGifViewControllerTest.m
+//  GiphyClient
 //
-//  Created by Jared Halpern on 9/10/15.
-//  Copyright (c) 2015 byteMason. All rights reserved.
+//  Created by Jared Halpern on 9/29/15.
+//  Copyright © 2015 byteMason. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@interface GiphyClientTests : XCTestCase
+@interface SingleGifViewControllerTest : XCTestCase
 
 @end
 
-@implementation GiphyClientTests
+@implementation SingleGifViewControllerTest
 
 - (void)setUp {
     [super setUp];
@@ -27,7 +26,7 @@
 
 - (void)testExample {
     // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+    // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
 - (void)testPerformanceExample {
