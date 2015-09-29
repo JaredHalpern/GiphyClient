@@ -32,13 +32,14 @@
   
   __weak SearchGifViewControllerTest *welf = self;
   
-  // do the initial search, so the data is ready faster after the search screen presents itself
-  // rather than waiting for it to load
   [[APIManager sharedManager] searchTerms:@"cat" withOffset:self.offset andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
-    self.searchTerms = searchTerms;
+    welf.searchTerms = searchTerms;
     welf.offset = offset;
     welf.dataArray = [data mutableCopy]; // replace, since we're simulating a fresh search / not appending
+    
     XCTAssertTrue(welf.dataArray.count > 0, @"data array count should be greater than zero");
+    XCTAssertTrue(welf.searchTerms, @"search terms should not be blank");
+    XCTAssertTrue(welf.offset >=0, @"offset must be >= 0");
   }];
 }
 

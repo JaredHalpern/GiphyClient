@@ -33,6 +33,7 @@
     welf.offset = offset;
 
     XCTAssertTrue(welf.dataArray.count > 0, @"data array count should be greater than zero");
+    XCTAssertTrue(welf.offset >=0, @"offset must be >= 0");
   }];
 
 
