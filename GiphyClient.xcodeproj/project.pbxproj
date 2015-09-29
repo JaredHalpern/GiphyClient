@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		312C4031BA631BD7538919DA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D86E3F272A850709A0EA1B7 /* libPods.a */; };
 		7F2D22221BBB35FD007F763C /* APIManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2D22211BBB35FD007F763C /* APIManagerTest.m */; settings = {ASSET_TAGS = (); }; };
+		7F2D22241BBB4590007F763C /* TrendingViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2D22231BBB4590007F763C /* TrendingViewControllerTest.m */; settings = {ASSET_TAGS = (); }; };
+		7F2D22261BBB45E0007F763C /* SearchGifViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2D22251BBB45E0007F763C /* SearchGifViewControllerTest.m */; settings = {ASSET_TAGS = (); }; };
 		7F30E2C41BA7300700B13EB6 /* SearchResultsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F30E2C31BA7300700B13EB6 /* SearchResultsHeaderView.m */; };
 		7F30E2C71BA8C20500B13EB6 /* nyan.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F30E2C61BA8C20500B13EB6 /* nyan.png */; };
 		7F30E2CA1BA9301A00B13EB6 /* GifCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F30E2C91BA9301A00B13EB6 /* GifCollectionViewCell.m */; };
@@ -41,6 +43,8 @@
 /* Begin PBXFileReference section */
 		7D86E3F272A850709A0EA1B7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F2D22211BBB35FD007F763C /* APIManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIManagerTest.m; sourceTree = "<group>"; };
+		7F2D22231BBB4590007F763C /* TrendingViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingViewControllerTest.m; sourceTree = "<group>"; };
+		7F2D22251BBB45E0007F763C /* SearchGifViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchGifViewControllerTest.m; sourceTree = "<group>"; };
 		7F30E2C21BA7300700B13EB6 /* SearchResultsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsHeaderView.h; sourceTree = "<group>"; };
 		7F30E2C31BA7300700B13EB6 /* SearchResultsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsHeaderView.m; sourceTree = "<group>"; };
 		7F30E2C61BA8C20500B13EB6 /* nyan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nyan.png; sourceTree = "<group>"; };
@@ -191,6 +195,8 @@
 			children = (
 				7FF77A5B1BA21D3E00F95108 /* GiphyClientTests.m */,
 				7F2D22211BBB35FD007F763C /* APIManagerTest.m */,
+				7F2D22231BBB4590007F763C /* TrendingViewControllerTest.m */,
+				7F2D22251BBB45E0007F763C /* SearchGifViewControllerTest.m */,
 				7FF77A591BA21D3E00F95108 /* Supporting Files */,
 			);
 			path = GiphyClientTests;
@@ -418,8 +424,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F2D22241BBB4590007F763C /* TrendingViewControllerTest.m in Sources */,
 				7F2D22221BBB35FD007F763C /* APIManagerTest.m in Sources */,
 				7FF77A5C1BA21D3E00F95108 /* GiphyClientTests.m in Sources */,
+				7F2D22261BBB45E0007F763C /* SearchGifViewControllerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
