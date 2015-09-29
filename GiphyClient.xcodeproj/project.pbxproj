@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		312C4031BA631BD7538919DA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D86E3F272A850709A0EA1B7 /* libPods.a */; };
+		7F2D22221BBB35FD007F763C /* APIManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2D22211BBB35FD007F763C /* APIManagerTest.m */; settings = {ASSET_TAGS = (); }; };
 		7F30E2C41BA7300700B13EB6 /* SearchResultsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F30E2C31BA7300700B13EB6 /* SearchResultsHeaderView.m */; };
 		7F30E2C71BA8C20500B13EB6 /* nyan.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F30E2C61BA8C20500B13EB6 /* nyan.png */; };
 		7F30E2CA1BA9301A00B13EB6 /* GifCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F30E2C91BA9301A00B13EB6 /* GifCollectionViewCell.m */; };
@@ -38,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		7D86E3F272A850709A0EA1B7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F2D22211BBB35FD007F763C /* APIManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIManagerTest.m; sourceTree = "<group>"; };
 		7F30E2C21BA7300700B13EB6 /* SearchResultsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsHeaderView.h; sourceTree = "<group>"; };
 		7F30E2C31BA7300700B13EB6 /* SearchResultsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsHeaderView.m; sourceTree = "<group>"; };
 		7F30E2C61BA8C20500B13EB6 /* nyan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nyan.png; sourceTree = "<group>"; };
@@ -87,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				312C4031BA631BD7538919DA /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				7FF77A5B1BA21D3E00F95108 /* GiphyClientTests.m */,
+				7F2D22211BBB35FD007F763C /* APIManagerTest.m */,
 				7FF77A591BA21D3E00F95108 /* Supporting Files */,
 			);
 			path = GiphyClientTests;
@@ -254,9 +259,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7FF77A621BA21D3E00F95108 /* Build configuration list for PBXNativeTarget "GiphyClientTests" */;
 			buildPhases = (
+				24E1386C215836BDEE76D529 /* Check Pods Manifest.lock */,
 				7FF77A511BA21D3E00F95108 /* Sources */,
 				7FF77A521BA21D3E00F95108 /* Frameworks */,
 				7FF77A531BA21D3E00F95108 /* Resources */,
+				0FAD16BC70696E6B7A27692F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -327,6 +334,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0FAD16BC70696E6B7A27692F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		24E1386C215836BDEE76D529 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		61794CE2F23B0C1D6145D513 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F2D22221BBB35FD007F763C /* APIManagerTest.m in Sources */,
 				7FF77A5C1BA21D3E00F95108 /* GiphyClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,7 +482,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -482,7 +520,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -522,6 +560,7 @@
 		};
 		7FF77A631BA21D3E00F95108 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0EF5E59030D435DD4F4355B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -535,12 +574,13 @@
 				INFOPLIST_FILE = GiphyClientTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GiphyClient.app/GiphyClient";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gifs.app/Gifs";
 			};
 			name = Debug;
 		};
 		7FF77A641BA21D3E00F95108 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A034F8298B5D7D57738196F6 /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -550,7 +590,7 @@
 				INFOPLIST_FILE = GiphyClientTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GiphyClient.app/GiphyClient";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gifs.app/Gifs";
 			};
 			name = Release;
 		};
