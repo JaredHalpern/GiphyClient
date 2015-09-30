@@ -54,8 +54,6 @@
     _singleGifImageView.layer.shadowRadius = 2.0f;
     _singleGifImageView.layer.shadowOpacity = 1.0f;
     _singleGifImageView.layer.masksToBounds = NO;
-//    _singleGifImageView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:cell.bounds cornerRadius:cell.contentView.layer.cornerRadius].CGPath;
-    
     
     NSURL *imageURL = _singleGifDict[@"images"][@"fixed_width"][@"url"];
     
@@ -92,10 +90,9 @@
     
     _shareSMSButton = [[UIButton alloc] init];
     _shareSMSButton.titleLabel.font = kFontRegular;
-    _shareSMSButton.titleLabel.textColor = kColorDarkBlue;
     _shareSMSButton.backgroundColor = kColorLightBlue;
     _shareSMSButton.layer.cornerRadius = 15;
-    [_shareSMSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_shareSMSButton setTitleColor:kColorDarkBlue forState:UIControlStateNormal];
     [_shareSMSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [_shareSMSButton setTitle:@"Share via SMS" forState:UIControlStateNormal];
     _shareSMSButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -107,6 +104,8 @@
     _clipboardButton.backgroundColor = kColorLightBlue;
     _clipboardButton.layer.cornerRadius = 15;
     [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
+    [_clipboardButton setTitleColor:kColorDarkBlue forState:UIControlStateNormal];
+    [_clipboardButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     _clipboardButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_clipboardButton addTarget:self action:@selector(didPressCopyToClipboardButton:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -116,6 +115,8 @@
     _saveImageButton.backgroundColor = kColorLightBlue;
     _saveImageButton.layer.cornerRadius = 15;
     [_saveImageButton setTitle:@"Save to Photos" forState:UIControlStateNormal];
+    [_saveImageButton setTitleColor:kColorDarkBlue forState:UIControlStateNormal];
+    [_saveImageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     _saveImageButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_saveImageButton addTarget:self action:@selector(didPressSaveToPhotos:) forControlEvents:UIControlEventTouchUpInside];
     
