@@ -30,13 +30,18 @@
 
 - (void)testSearchGifs {
   
-  __weak SearchGifViewControllerTest *welf = self;
+  // Given
+  self.offset = 0;
   
+  __weak SearchGifViewControllerTest *welf = self;
+
+  // When
   [[APIManager sharedManager] searchTerms:@"cat" withOffset:self.offset andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
     welf.searchTerms = searchTerms;
     welf.offset = offset;
     welf.dataArray = [data mutableCopy]; // replace, since we're simulating a fresh search / not appending
     
+    // Then
     XCTAssertTrue(welf.dataArray.count > 0, @"data array count should be greater than zero");
     XCTAssertTrue(welf.searchTerms, @"search terms should not be blank");
     XCTAssertTrue(welf.offset >=0, @"offset must be >= 0");

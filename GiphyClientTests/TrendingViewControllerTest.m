@@ -26,12 +26,18 @@
 
 - (void)testGetTrendingGifs {
 
+  // Given
+  self.offset = 0;
+
   __weak TrendingViewControllerTest *welf = self;
 
+  
+  // When
   [[APIManager sharedManager] getTrendingGifsWithOffset:welf.offset andCompletion:^(NSArray *data, NSInteger offset) {
     welf.dataArray = [[welf.dataArray arrayByAddingObjectsFromArray:data] mutableCopy];
     welf.offset = offset;
 
+    // Then
     XCTAssertTrue(welf.dataArray.count > 0, @"data array count should be greater than zero");
     XCTAssertTrue(welf.offset >=0, @"offset must be >= 0");
   }];
