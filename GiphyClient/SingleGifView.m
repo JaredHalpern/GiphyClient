@@ -45,6 +45,18 @@
     _singleGifImageView = [[UIImageView alloc] init];
     _singleGifImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
+    _singleGifImageView.layer.cornerRadius = 15;
+    _singleGifImageView.layer.borderWidth = 1.0;
+    _singleGifImageView.layer.borderColor = [[UIColor clearColor] CGColor];
+    _singleGifImageView.layer.masksToBounds = YES;
+    _singleGifImageView.layer.shadowColor = [[UIColor darkGrayColor] CGColor];
+    _singleGifImageView.layer.shadowOffset = CGSizeMake(0, 2.0f);
+    _singleGifImageView.layer.shadowRadius = 2.0f;
+    _singleGifImageView.layer.shadowOpacity = 1.0f;
+    _singleGifImageView.layer.masksToBounds = NO;
+//    _singleGifImageView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:cell.bounds cornerRadius:cell.contentView.layer.cornerRadius].CGPath;
+    
+    
     NSURL *imageURL = _singleGifDict[@"images"][@"fixed_width"][@"url"];
     
     __weak SingleGifView *welf = self;
