@@ -107,12 +107,12 @@
   
   if (!self.loadingGifs) {
     
-    [SVProgressHUD show];
-    self.loadingGifs = YES;
     __weak SearchGifViewController *welf = self;
     
     if (offsetY > contentHeight - scrollView.frame.size.height){
       // scrolling forwards (down)
+      [SVProgressHUD show];
+      self.loadingGifs = YES;
       
       [[APIManager sharedManager] searchTerms:self.searchTerms withOffset:(self.offset + kWindowSize) andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
         
@@ -133,29 +133,6 @@
         }];
         
       }];
-    } else {
-      // scrolling backwards
-     
-      [[APIManager sharedManager] searchTerms:self.searchTerms withOffset:(self.offset - kWindowSize) andCompletion:^(NSArray *data, NSString *searchTerms, NSInteger offset) {
-        
-        welf.offset = offset;
-        
-        NSMutableArray *indicesToAppend = [@[] mutableCopy];
-        for (NSInteger i = 0; i < data.count; i++) {
-          [indicesToAppend addObject:[NSIndexPath indexPathForItem:(welf.dataArray.count + i) inSection:0]];
-        }
-        
-        welf.dataArray = [[welf.dataArray arrayByAddingObjectsFromArray:data] mutableCopy];
-        
-        [welf.collectionView performBatchUpdates:^{
-          [welf.collectionView insertItemsAtIndexPaths:indicesToAppend];
-        } completion:^(BOOL finished) {
-          self.loadingGifs = NO;
-          [SVProgressHUD dismiss];
-        }];
-        
-      }];
-      
     }
   }
 }
