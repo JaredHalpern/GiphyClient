@@ -64,6 +64,7 @@
     progressHUD.delegate = self;
     [progressHUD show:YES];
     progressHUD.color = kColorLightBlueAlpha;    
+    progressHUD.yOffset = 40.0f;
     
     [_singleGifImageView sd_setImageWithURL:imageURL placeholderImage:kPlaceholderImage
                                     options:SDWebImageHighPriority
@@ -92,7 +93,7 @@
     _shareSMSButton.titleLabel.font = kFontRegular;
     _shareSMSButton.backgroundColor = kColorLightBlue;
     _shareSMSButton.layer.cornerRadius = 15;
-    [_shareSMSButton setTitleColor:kColorDarkBlue forState:UIControlStateNormal];
+    [_shareSMSButton setTitleColor:kColorFeedBackground forState:UIControlStateNormal];
     [_shareSMSButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [_shareSMSButton setTitle:@"Share via SMS" forState:UIControlStateNormal];
     _shareSMSButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -100,22 +101,20 @@
     
     _clipboardButton = [[UIButton alloc] init];
     _clipboardButton.titleLabel.font = kFontRegular;
-    _clipboardButton.titleLabel.textColor = kColorDarkBlue;
     _clipboardButton.backgroundColor = kColorLightBlue;
     _clipboardButton.layer.cornerRadius = 15;
     [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
-    [_clipboardButton setTitleColor:kColorDarkBlue forState:UIControlStateNormal];
+    [_clipboardButton setTitleColor:kColorFeedBackground forState:UIControlStateNormal];
     [_clipboardButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     _clipboardButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_clipboardButton addTarget:self action:@selector(didPressCopyToClipboardButton:) forControlEvents:UIControlEventTouchUpInside];
 
     _saveImageButton = [[UIButton alloc] init];
     _saveImageButton.titleLabel.font = kFontRegular;
-    _saveImageButton.titleLabel.textColor = kColorDarkBlue;
     _saveImageButton.backgroundColor = kColorLightBlue;
     _saveImageButton.layer.cornerRadius = 15;
     [_saveImageButton setTitle:@"Save to Photos" forState:UIControlStateNormal];
-    [_saveImageButton setTitleColor:kColorDarkBlue forState:UIControlStateNormal];
+    [_saveImageButton setTitleColor:kColorFeedBackground forState:UIControlStateNormal];
     [_saveImageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     _saveImageButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_saveImageButton addTarget:self action:@selector(didPressSaveToPhotos:) forControlEvents:UIControlEventTouchUpInside];
